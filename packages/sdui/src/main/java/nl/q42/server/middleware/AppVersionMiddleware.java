@@ -1,9 +1,11 @@
 package nl.q42.server.middleware;
 
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import nl.q42.sdui.SDUIApplication;
+import nl.q42.server.ErrorResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -11,9 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class AppVersionMiddleware implements HandlerInterceptor
 {
-
-  static final String INVALID_VERSION_ERROR_RESPONSE =
-      "{\"error\":\"Invalid app version provided\"}";
 
   @Override
   public boolean preHandle(
@@ -33,7 +32,14 @@ public class AppVersionMiddleware implements HandlerInterceptor
       if (version < SDUIApplication.MINIMUM_APP_VERSION || version > SDUIApplication.MAXIMUM_APP_VERSION)
       {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        response.getWriter().write(INVALID_VERSION_ERROR_RESPONSE);
+        response.getWriter().write(new Gson().toJson(new ErrorResponse(
+            String.format(
+                "Invalid app version provided. Please provide a " +
+                "version between %d and %d",
+                SDUIApplication.MINIMUM_APP_VERSION,
+                SDUIApplication.MAXIMUM_APP_VERSION
+            )
+        )));
 
         return false;
       }

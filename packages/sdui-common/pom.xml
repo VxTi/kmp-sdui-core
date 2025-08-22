@@ -14,5 +14,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aws.java.sdk.version>2.22.0</aws.java.sdk.version>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.19.2</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 </project>
 

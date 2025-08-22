@@ -3,15 +3,12 @@ package nl.q42.server.routes;
 import lombok.extern.slf4j.Slf4j;
 import nl.q42.core.RequestContext;
 import nl.q42.sdui.SDUIApplication;
-import nl.q42.sdui.screen.SDUIScreen;
-import nl.q42.sdui.screen.Screen;
+import nl.q42.sdui.screen.common.SDUIScreen;
 import nl.q42.server.middleware.MiddlewareConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.stream.Stream;
 
 @RestController
 @Slf4j(topic = "Application Initiation Route")
@@ -34,10 +31,6 @@ public class ApplicationInitiationRoute
         context.revalidateRequest
     );
 
-    var tabs = Stream.of(SDUIScreen.tabScreens)
-        .flatMap(sduiTabScreen -> sduiTabScreen.tryInstantiate(context).stream())
-        .toArray(Screen[]::new);
-
-    return new SDUIApplication(context, null, tabs);
+    return new SDUIApplication(context, null, SDUIScreen.tryInstantiateTabs(context));
   }
 }

@@ -1,32 +1,32 @@
 package nl.q42.sdui;
 
-import nl.q42.common.ApplicationMetadata;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import nl.q42.common.MetadataType;
 import nl.q42.core.RequestContext;
 import nl.q42.sdui.component.Component;
 
 import java.io.Serializable;
+import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SDUIApplication implements Serializable
 {
   public static final int MINIMUM_APP_VERSION = 1;
   public static final int MAXIMUM_APP_VERSION = 1;
 
-  public String name;
+  public final Component                 screen;
+  public       Component[]               tabs;
+  public       Map<MetadataType, Object> metadata;
 
-  public final Component           content;
-  public Component[]         tabs = null;
-  public ApplicationMetadata metadata;
-
-  public SDUIApplication(RequestContext context, Component content, Component[] tabs)
+  public SDUIApplication(RequestContext context, Component screen, Component[] tabs)
   {
-    this.name     = context.locale.value;
-    this.content  = content;
+    this.screen   = screen;
     this.tabs     = tabs;
-    this.metadata = new ApplicationMetadata();
+    this.metadata = MetadataType.DEFAULT_VALUES;
   }
 
-  public SDUIApplication(RequestContext context, Component content)
+  public SDUIApplication(RequestContext context, Component screen)
   {
-    this(context, content, null);
+    this(context, screen, null);
   }
 }

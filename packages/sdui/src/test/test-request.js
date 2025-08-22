@@ -5,7 +5,7 @@ const url = "http://localhost:8080"
 const headers = {
     'X-App-Locale': 'nl-NL',
     'X-App-Version': '1',
-    'X-App-Identity': 'nl-NL123'
+    'X-App-Identity': '  nl_NL123'
 };
 
 async function request() {

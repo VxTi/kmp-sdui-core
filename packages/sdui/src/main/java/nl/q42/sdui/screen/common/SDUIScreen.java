@@ -1,8 +1,12 @@
-package nl.q42.sdui.screen;
+package nl.q42.sdui.screen.common;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import nl.q42.core.RequestContext;
+import nl.q42.sdui.screen.HomeScreen;
+import nl.q42.sdui.screen.ProfileScreen;
+import nl.q42.sdui.screen.SearchScreen;
+import nl.q42.sdui.screen.SettingsScreen;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -15,33 +19,25 @@ public class SDUIScreen
 
   private final         Class<? extends Screen> screen;
   private final @Getter String                  screenIdentifier;
-  private final         boolean                 tabScreen;
 
   public static final SDUIScreen[] screens = new SDUIScreen[]{
-      new SDUIScreen(HomeScreen.class, "home", true),
-      new SDUIScreen(SearchScreen.class, "search", true),
-      new SDUIScreen(ProfileScreen.class, "profile", true),
-      new SDUIScreen(SettingsScreen.class, "settings", true)
+      new SDUIScreen(HomeScreen.class, "home"),
+      new SDUIScreen(SearchScreen.class, "search"),
+      new SDUIScreen(ProfileScreen.class, "profile"),
+      new SDUIScreen(SettingsScreen.class, "settings")
   };
 
-  public static final SDUIScreen[] tabScreens = Stream
-      .of(screens)
-      .filter(screen -> screen.tabScreen)
-      .toArray(SDUIScreen[]::new);
+  public static final SDUIScreenTab[] screenTabs = new SDUIScreenTab[]{
+      new SDUIScreenTab("tab.home", "home.png", "home"),
+      new SDUIScreenTab("tab.search", "search.png", "search"),
+      new SDUIScreenTab("tab.profile", "profile.png", "profile"),
+      new SDUIScreenTab("tab.settings", "settings.png", "settings")
+  };
 
-  private SDUIScreen(Class<? extends Screen> component, String screenIdentifier, boolean tabScreen)
+  private SDUIScreen(Class<? extends Screen> component, String screenIdentifier)
   {
     this.screen           = component;
     this.screenIdentifier = screenIdentifier;
-    this.tabScreen        = tabScreen;
-  }
-
-  /**
-   * Constructor for non-tab screens
-   */
-  private SDUIScreen(Class<? extends Screen> component, String screenIdentifier)
-  {
-    this(component, screenIdentifier, false);
   }
 
   public static Optional<SDUIScreen> tryGetById(String screenIdentifier)
@@ -50,6 +46,16 @@ public class SDUIScreen
         .of(screens)
         .filter(screen -> screen.getScreenIdentifier().equals(screenIdentifier))
         .findFirst();
+  }
+
+  public static ScreenTab[] tryInstantiateTabs(RequestContext context)
+  {
+    return Stream.of(SDUIScreen.screenTabs)
+                 .map(sduiTabScreen -> new ScreenTab(
+                     sduiTabScreen.titleLabelKey,
+                     sduiTabScreen.iconUrl, sduiTabScreen.screenName
+                 ))
+                 .toArray(ScreenTab[]::new);
   }
 
   /**
@@ -89,5 +95,14 @@ public class SDUIScreen
       );
       return Optional.empty();
     }
+  }
+
+  public record SDUIScreenTab(
+      String titleLabelKey,
+      String iconUrl,
+      String screenName
+  )
+  {
+
   }
 }

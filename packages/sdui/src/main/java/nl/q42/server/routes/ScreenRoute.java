@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.q42.core.RequestContext;
 import nl.q42.core.exceptions.ScreenNotFoundException;
 import nl.q42.sdui.SDUIApplication;
-import nl.q42.sdui.screen.SDUIScreen;
+import nl.q42.sdui.screen.common.SDUIScreen;
 import nl.q42.server.middleware.MiddlewareConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
