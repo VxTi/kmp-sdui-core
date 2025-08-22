@@ -34,7 +34,7 @@ public class ApplicationInitiationRoute
 
     return SDUIApplication.builder()
         .tabs(SDUIScreen.tryInstantiateTabs(context))
-        .immediateAction(new NavigationAction("home"))
+        .onLoadAction(new NavigationAction("home", false))
         .build();
   }
 }
