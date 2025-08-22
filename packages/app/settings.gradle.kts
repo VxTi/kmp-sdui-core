@@ -28,11 +28,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-include(":app")
-project(":app").projectDir = file("packages/app")
-
-include(":sdui")
-project(":sdui").projectDir = file("packages/sdui")
-
+include(":composeApp")
 
