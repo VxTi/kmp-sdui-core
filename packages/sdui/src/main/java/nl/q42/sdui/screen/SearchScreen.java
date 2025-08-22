@@ -1,7 +1,7 @@
 package nl.q42.sdui.screen;
 
 import nl.q42.core.RequestContext;
-import nl.q42.sdui.component.Component;
+import nl.q42.common.components.Component;
 import nl.q42.sdui.screen.common.Screen;
 
 import java.util.List;

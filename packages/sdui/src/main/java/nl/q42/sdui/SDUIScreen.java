@@ -1,4 +1,4 @@
-package nl.q42.sdui.screen.common;
+package nl.q42.sdui;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +7,8 @@ import nl.q42.sdui.screen.HomeScreen;
 import nl.q42.sdui.screen.ProfileScreen;
 import nl.q42.sdui.screen.SearchScreen;
 import nl.q42.sdui.screen.SettingsScreen;
+import nl.q42.sdui.screen.common.Screen;
+import nl.q42.sdui.screen.common.ScreenTab;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +55,8 @@ public class SDUIScreen
     return Stream.of(SDUIScreen.screenTabs)
                  .map(sduiTabScreen -> new ScreenTab(
                      sduiTabScreen.titleLabelKey,
-                     sduiTabScreen.iconUrl, sduiTabScreen.screenName
+                     sduiTabScreen.iconUrl,
+                     sduiTabScreen.screenName
                  ))
                  .toArray(ScreenTab[]::new);
   }

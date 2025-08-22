@@ -1,19 +1,15 @@
 package nl.q42.common;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum MetadataType
 {
   MAXIMIZE_BRIGHTNESS("maximizeBrightness"),
   REFRESH_INTERVAL("refreshInterval");
 
-  public final String value;
-
+  public final        String                    value;
   public static final Map<MetadataType, Object> DEFAULT_VALUES;
 
   MetadataType(String value)

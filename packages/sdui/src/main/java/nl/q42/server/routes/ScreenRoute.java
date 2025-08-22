@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.q42.core.RequestContext;
 import nl.q42.core.exceptions.ScreenNotFoundException;
 import nl.q42.sdui.SDUIApplication;
-import nl.q42.sdui.screen.common.SDUIScreen;
+import nl.q42.sdui.SDUIScreen;
 import nl.q42.server.middleware.MiddlewareConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +37,7 @@ public class ScreenRoute
     return SDUIScreen
         .tryGetById(screenIdentifier)
         .flatMap(sduiScreen -> sduiScreen.tryInstantiate(context))
-        .map(screenInstance -> new SDUIApplication(context, screenInstance))
+        .map(screenInstance -> SDUIApplication.builder().screen(screenInstance).build())
         .orElseThrow(() -> new ScreenNotFoundException(
             String.format(
                 "Unable to retrieve screen with identifier %s",

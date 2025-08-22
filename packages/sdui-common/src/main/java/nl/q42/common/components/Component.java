@@ -1,4 +1,4 @@
-package nl.q42.sdui.component;
+package nl.q42.common.components;
 
 import java.io.Serializable;
 

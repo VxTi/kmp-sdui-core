@@ -1,8 +1,4 @@
-package nl.q42.sdui.component;
-
-import nl.q42.common.components.ComponentTypes;
-import nl.q42.common.components.TextColor;
-import nl.q42.common.components.TextFormatting;
+package nl.q42.common.components;
 
 public class TextComponent extends Component
 {

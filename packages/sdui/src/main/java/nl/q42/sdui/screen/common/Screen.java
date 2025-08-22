@@ -2,7 +2,7 @@ package nl.q42.sdui.screen.common;
 
 import nl.q42.common.components.ComponentTypes;
 import nl.q42.core.RequestContext;
-import nl.q42.sdui.component.Component;
+import nl.q42.common.components.Component;
 
 import java.io.Serializable;
 import java.util.List;

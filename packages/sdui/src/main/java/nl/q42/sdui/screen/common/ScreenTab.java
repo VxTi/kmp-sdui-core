@@ -1,17 +1,7 @@
 package nl.q42.sdui.screen.common;
 
-import nl.q42.common.components.ComponentTypes;
-import nl.q42.sdui.component.Component;
+import java.io.Serializable;
 
-public class ScreenTab extends Component
+public record ScreenTab(String title, String imageUrl, String screenName) implements Serializable
 {
-  public final String title;
-  public final String imageUrl;
-
-  public ScreenTab(String title, String imageUrl, String contentId)
-  {
-    super(ComponentTypes.SCREEN_TAB, contentId);
-    this.title    = title;
-    this.imageUrl = imageUrl;
-  }
 }
