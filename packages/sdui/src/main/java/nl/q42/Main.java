@@ -1,18 +1,13 @@
 package nl.q42;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Collections;
-import java.util.Objects;
 
 @Slf4j
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -22,18 +17,20 @@ public class Main
 {
   public static final String SERVER_MODE = "dev";
 
-  public static void main(String[] args) throws IOException, ReflectiveOperationException
+  public static void main(String[] args) throws IOException
   {
-    injectEnvironmentVariables();
+    // injectEnvironmentVariables();
     SpringApplication app = new SpringApplication(Main.class);
     app.setDefaultProperties(Collections.singletonMap("server.port", "8080"));
     app.run(args);
   }
 
-  private static void injectEnvironmentVariables() throws IOException
+  /*private static void injectEnvironmentVariables() throws IOException
   {
     // TODO: Implement proper environment variable injection
-    File envPath = new File("/Users/luca/Projects/Personal/experience-customerapp-java/env");
+    File envPath = new File("env");
+
+    System.out.printf("Path: %s", envPath.getAbsolutePath());
     if (!envPath.exists())
       throw new RuntimeException("Environment file not found");
 
@@ -54,5 +51,5 @@ public class Main
 
       log.info("Injected environment variables from {}", file.getName());
     }
-  }
+  }*/
 }
