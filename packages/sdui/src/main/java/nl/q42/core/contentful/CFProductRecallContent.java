@@ -9,8 +9,8 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class CFProductRecallContent implements CFInspectableContent
 {
-    public static final String type = "product-recall";
-    public           String id;
-    public @Nullable String name;
-    public @Nullable String articleNumberDescription;
+  public static final String type = "product-recall";
+  public              String id;
+  public @Nullable    String name;
+  public @Nullable    String articleNumberDescription;
 }

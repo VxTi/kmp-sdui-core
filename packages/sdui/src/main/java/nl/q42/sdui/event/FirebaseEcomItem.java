@@ -8,16 +8,16 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class FirebaseEcomItem
 {
-    public           int    index;
-    public @Nullable String itemId;
-    public @Nullable String itemName;
-    public @Nullable String itemVariant;
-    public           double price;
-    public           int    quantity;
-    public @Nullable String brand;
-    public @Nullable String itemCategory;
-    public @Nullable String itemCategory2;
-    public @Nullable String itemCategory3;
-    public @Nullable String itemCategory4;
-    public @Nullable String itemCategory5;
+  public           int    index;
+  public @Nullable String itemId;
+  public @Nullable String itemName;
+  public @Nullable String itemVariant;
+  public           double price;
+  public           int    quantity;
+  public @Nullable String brand;
+  public @Nullable String itemCategory;
+  public @Nullable String itemCategory2;
+  public @Nullable String itemCategory3;
+  public @Nullable String itemCategory4;
+  public @Nullable String itemCategory5;
 }

@@ -9,6 +9,6 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class CFParagraphElement implements CFTextElement, CFContent, CFListElementItemContent
 {
-    public final     String          type = "paragraph";
-    public @Nullable CFTextElement[] content;
+  public final     String          type = "paragraph";
+  public @Nullable CFTextElement[] content;
 }

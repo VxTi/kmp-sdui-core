@@ -12,12 +12,12 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class CFProductCarouselContent implements CFContentItem, CFCarousel
 {
-    @Builder.Default
-    public           String                  type = "product-carousel";
-    public           String                  id;
-    public           String                  title;
-    public @Nullable String                  subtitle;
-    public @Nullable String                  viewAllUrl;
-    public @Nullable String                  viewAllDescription;
-    public           CFProductCarouselSource source;
+  @Builder.Default
+  public           String                  type = "product-carousel";
+  public           String                  id;
+  public           String                  title;
+  public @Nullable String                  subtitle;
+  public @Nullable String                  viewAllUrl;
+  public @Nullable String                  viewAllDescription;
+  public           CFProductCarouselSource source;
 }

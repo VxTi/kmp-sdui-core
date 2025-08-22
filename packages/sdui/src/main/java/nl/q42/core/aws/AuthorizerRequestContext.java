@@ -10,10 +10,10 @@ import org.springframework.lang.Nullable;
 @Builder
 public class AuthorizerRequestContext
 {
-    public           String principalId;
-    public @Nullable String scope;
-    public @Nullable String clientId;
-    public @Nullable String hemaId;
-    public @Nullable String customerId;
-    public @Nullable String customerNumber;
+  public           String principalId;
+  public @Nullable String scope;
+  public @Nullable String clientId;
+  public @Nullable String hemaId;
+  public @Nullable String customerId;
+  public @Nullable String customerNumber;
 }

@@ -10,9 +10,9 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class SearchQueryParams
 {
-    public @Nullable String term;
-    public @Nullable String categoryId;
-    public @Nullable String disableOutOfStockFallback;
-    public @Nullable String sort;
+  public @Nullable String term;
+  public @Nullable String categoryId;
+  public @Nullable String disableOutOfStockFallback;
+  public @Nullable String sort;
 
 }

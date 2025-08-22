@@ -8,9 +8,9 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class CFProductGroupValues implements CFProductCarouselSource
 {
-    public final     String   type = "product-group-values";
-    public           String   id;
-    public           String[] productIds;
-    public @Nullable String   title;
-    public           int      maxProducts;
+  public final     String   type = "product-group-values";
+  public           String   id;
+  public           String[] productIds;
+  public @Nullable String   title;
+  public           int      maxProducts;
 }

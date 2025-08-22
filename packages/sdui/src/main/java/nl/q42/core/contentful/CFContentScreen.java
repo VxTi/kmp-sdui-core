@@ -12,12 +12,12 @@ import org.springframework.lang.Nullable;
 public class CFContentScreen
 {
 
-    public @Builder.Default String          type = "content-screen";
-    public @Nullable        CFContentItem[] items;
-    public                  String          slug;
-    public                  String          body;
-    public                  String          titleLong;
-    public                  String          titleShort;
-    public                  String          imageUrl;
-    public                  String          id;
+  public @Builder.Default String          type = "content-screen";
+  public @Nullable        CFContentItem[] items;
+  public                  String          slug;
+  public                  String          body;
+  public                  String          titleLong;
+  public                  String          titleShort;
+  public                  String          imageUrl;
+  public                  String          id;
 }

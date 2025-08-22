@@ -17,50 +17,50 @@ import java.util.Map;
 @Builder
 public class AppContext
 {
-    public           AppFeatures          features;
-    public           Map<String, Boolean> experiments;
-    public           SupportedPlatform    platform;
-    public           SupportedLocale      locale;
-    public           SupportedCountry     country;
-    public           int                  version = -1;
-    public           CoreConfig           config;
-    public           boolean              authenticated;
-    public @Nullable String               cookieId;
-    public           boolean              previewContentEnabled;
-    public @Nullable String               forwardedHeaderValue;
+  public           AppFeatures          features;
+  public           Map<String, Boolean> experiments;
+  public           SupportedPlatform    platform;
+  public           SupportedLocale      locale;
+  public           SupportedCountry     country;
+  public           int                  version = -1;
+  public           CoreConfig           config;
+  public           boolean              authenticated;
+  public @Nullable String               cookieId;
+  public           boolean              previewContentEnabled;
+  public @Nullable String               forwardedHeaderValue;
 
-    /**
-     * Check if the component is supported by the given context.
-     *
-     * @param component The component to check support for.
-     * @return True if the component is supported, false otherwise.
-     */
-    public boolean isSupported(Class<?> component)
+  /**
+   * Check if the component is supported by the given context.
+   *
+   * @param component The component to check support for.
+   * @return True if the component is supported, false otherwise.
+   */
+  public boolean isSupported(Class<?> component)
+  {
+    var annotations = component.getAnnotation(RequiresAppVersion.class);
+    if (annotations == null)
+      return true;
+
+    return this.version < 0 || this.version >= annotations.value();
+  }
+
+  /**
+   * Filter the object based on the version of the app.
+   *
+   * @param object The object to filter.
+   * @param <T>    The type of the object.
+   * @return The object if it is supported, null otherwise.
+   */
+  public <T> T filterForVersion(T object)
+  {
+    if (object == null)
     {
-        var annotations = component.getAnnotation(RequiresAppVersion.class);
-        if ( annotations == null )
-            return true;
-
-        return this.version < 0 || this.version >= annotations.value();
+      return null;
     }
-
-    /**
-     * Filter the object based on the version of the app.
-     *
-     * @param object The object to filter.
-     * @param <T>    The type of the object.
-     * @return The object if it is supported, null otherwise.
-     */
-    public <T> T filterForVersion(T object)
+    if (isSupported(object.getClass()))
     {
-        if ( object == null )
-        {
-            return null;
-        }
-        if ( isSupported(object.getClass()) )
-        {
-            return object;
-        }
-        return null;
+      return object;
     }
+    return null;
+  }
 }

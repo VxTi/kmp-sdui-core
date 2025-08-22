@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoriesScreenRoute implements IScreenRoute
 {
 
-    @GetMapping(
-            path = "/categories",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public BasicScreenResponse handle(@RequestAttribute("request")BasicClientRequest request)
-    {
-        return new BasicScreenResponse(CategoriesScreen.create(request.context), request.context);
-    }
+  @GetMapping(
+      path = "/categories",
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public BasicScreenResponse handle(@RequestAttribute("request") BasicClientRequest request)
+  {
+    return new BasicScreenResponse(CategoriesScreen.create(request.context), request.context);
+  }
 }

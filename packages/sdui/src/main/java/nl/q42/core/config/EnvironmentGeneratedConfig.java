@@ -5,5 +5,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class EnvironmentGeneratedConfig extends AbstractConfiguration
 {
-    public String static_files_hostname;
+  public String static_files_hostname;
 }

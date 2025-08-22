@@ -9,8 +9,8 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class BannerOverlayImages
 {
-    public @Nullable RemoteImage topLeftImage;
-    public @Nullable RemoteImage topRightImage;
-    public @Nullable RemoteImage bottomLeftImage;
-    public @Nullable RemoteImage bottomRightImage;
+  public @Nullable RemoteImage topLeftImage;
+  public @Nullable RemoteImage topRightImage;
+  public @Nullable RemoteImage bottomLeftImage;
+  public @Nullable RemoteImage bottomRightImage;
 }

@@ -12,19 +12,19 @@ import nl.q42.core.aws.HttpLambdaEvent;
 @RequiredArgsConstructor
 public abstract class Validator<T>
 {
-    /**
-     * Validate the given event and context.
-     *
-     * @param event   The event to validate.
-     * @param context The context to validate.
-     * @return The validation result.
-     */
-    public abstract ValidationResult<T> validate(HttpLambdaEvent event,
-                                                   HttpLambdaContext context);
+  /**
+   * The specification of the parameter to validate.
+   */
+  public OpenApiParameter spec;
 
-    /**
-     * The specification of the parameter to validate.
-     */
-    public OpenApiParameter spec;
+  /**
+   * Validate the given event and context.
+   *
+   * @param event   The event to validate.
+   * @param context The context to validate.
+   * @return The validation result.
+   */
+  public abstract ValidationResult<T> validate(HttpLambdaEvent event,
+                                               HttpLambdaContext context);
 
 }

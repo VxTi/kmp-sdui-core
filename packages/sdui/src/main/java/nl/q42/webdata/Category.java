@@ -8,11 +8,11 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class Category
 {
-    public @Nullable Category[] categories;
-    public           String     id;
-    public @Nullable String     name;
-    public @Nullable String     parent_category_id;
-    public @Nullable String     c_appCategoryImage;
-    public           boolean    c_showInMenu = false;
+  public @Nullable Category[] categories;
+  public           String     id;
+  public @Nullable String     name;
+  public @Nullable String     parent_category_id;
+  public @Nullable String     c_appCategoryImage;
+  public           boolean    c_showInMenu = false;
 
 }

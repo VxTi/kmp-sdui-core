@@ -12,11 +12,11 @@ import org.springframework.lang.Nullable;
 public class CFProductListContent implements CFContentItem
 {
 
-    public @Builder.Default String   type = "product-list";
-    public @Nullable        String   productsUrl;
-    public @Nullable        String   buttonTitle;
-    public @Nullable        String   buttonUrl;
-    public                  String[] productIds;
-    public                  int      maxProducts;
-    public                  String   id;
+  public @Builder.Default String   type = "product-list";
+  public @Nullable        String   productsUrl;
+  public @Nullable        String   buttonTitle;
+  public @Nullable        String   buttonUrl;
+  public                  String[] productIds;
+  public                  int      maxProducts;
+  public                  String   id;
 }

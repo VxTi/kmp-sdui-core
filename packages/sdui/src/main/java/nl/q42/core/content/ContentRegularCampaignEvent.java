@@ -7,13 +7,13 @@ import org.springframework.lang.Nullable;
 
 public class ContentRegularCampaignEvent implements ContentItem
 {
-    public final     String               type = "regular-campaign-event";
-    public           String               id;
-    public           CFCampaignEventColor color;
-    public           String               displayTitle;
-    public @Nullable String               displaySubtitle;
-    public           String               accessibilityTitle;
-    public @Nullable LookupDestination    destination;
-    public @Nullable Carousel             carousel;
+  public final     String               type = "regular-campaign-event";
+  public           String               id;
+  public           CFCampaignEventColor color;
+  public           String               displayTitle;
+  public @Nullable String               displaySubtitle;
+  public           String               accessibilityTitle;
+  public @Nullable LookupDestination    destination;
+  public @Nullable Carousel             carousel;
 
 }

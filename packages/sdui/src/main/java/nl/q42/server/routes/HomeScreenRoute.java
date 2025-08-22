@@ -14,17 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeScreenRoute implements IScreenRoute
 {
-    @GetMapping(
-            path = "/home",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public BasicScreenResponse getHomeScreen(@RequestAttribute("request") BasicClientRequest request)
-    {
-        return new BasicScreenResponse(HomeScreen.create(
-                request.context, false,
-                null, null
-                                                  ),
-                                        request.context
-        );
-    }
+  @GetMapping(
+      path = "/home",
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public BasicScreenResponse getHomeScreen(@RequestAttribute("request") BasicClientRequest request)
+  {
+    return new BasicScreenResponse(
+        HomeScreen.create(
+            request.context, false,
+            null, null
+        ),
+        request.context
+    );
+  }
 }

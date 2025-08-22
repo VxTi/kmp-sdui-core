@@ -9,6 +9,6 @@ import java.util.List;
 public class SectionContainer
 {
 
-    public final           String                  type = "SECTIONS";
-    public final @Singular List<AbstractSection> sections;
+  public final           String                type = "SECTIONS";
+  public final @Singular List<AbstractSection> sections;
 }

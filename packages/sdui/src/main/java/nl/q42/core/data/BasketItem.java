@@ -5,6 +5,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BasketItem
 {
-    public String productId;
-    public int quantity;
+  public String productId;
+  public int    quantity;
 }

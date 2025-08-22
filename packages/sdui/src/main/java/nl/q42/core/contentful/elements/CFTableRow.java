@@ -5,5 +5,5 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CFTableRow
 {
-    public CFTableCell[] cells;
+  public CFTableCell[] cells;
 }

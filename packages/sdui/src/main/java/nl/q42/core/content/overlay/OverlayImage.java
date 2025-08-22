@@ -10,7 +10,7 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class OverlayImage implements OverlayItem
 {
-    public final     String         type = "'OVERLAY_IMAGE'";
-    public           RemoteImage    image;
-    public @Nullable AbstractAction action;
+  public final     String         type = "'OVERLAY_IMAGE'";
+  public           RemoteImage    image;
+  public @Nullable AbstractAction action;
 }

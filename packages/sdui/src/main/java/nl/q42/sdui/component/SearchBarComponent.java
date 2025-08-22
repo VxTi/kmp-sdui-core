@@ -8,8 +8,8 @@ import nl.q42.sdui.action.AbstractAction;
 @SuperBuilder
 public class SearchBarComponent extends AbstractComponent
 {
-    public final String type = "SEARCH_BAR_COMPONENT";
-    public final String placeholder;
-    public final AbstractAction searchAction;
+  public final String         type = "SEARCH_BAR_COMPONENT";
+  public final String         placeholder;
+  public final AbstractAction searchAction;
 }
 

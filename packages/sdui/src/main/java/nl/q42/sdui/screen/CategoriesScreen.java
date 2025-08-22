@@ -7,32 +7,32 @@ import nl.q42.sdui.component.section.SectionContainer;
 
 public class CategoriesScreen
 {
-    public static AbstractScreen create(AppContext context)
-    {
-        return ScreenWithContentList
-                .builder()
-                .id("categories")
-                .canRefresh(true)
-                .content(generateContent(context))
-                .build();
-    }
+  public static AbstractScreen create(AppContext context)
+  {
+    return ScreenWithContentList
+        .builder()
+        .id("categories")
+        .canRefresh(true)
+        .content(generateContent(context))
+        .build();
+  }
 
-    private static SectionContainer generateContent(AppContext context)
-    {
-        return SectionContainer
-                .builder()
-                .section(PrimarySection
-                                 .builder()
-                                 .contentId("search-bar")
-                                 .component(
-                                         SearchBarComponent
-                                                 .builder()
-                                                 .placeholder(
-                                                         "Search product")
-                                                 .contentId(
-                                                         "search-bar-element")
-                                                 .build())
-                                 .build())
-                .build();
-    }
+  private static SectionContainer generateContent(AppContext context)
+  {
+    return SectionContainer
+        .builder()
+        .section(PrimarySection
+                     .builder()
+                     .contentId("search-bar")
+                     .component(
+                         SearchBarComponent
+                             .builder()
+                             .placeholder(
+                                 "Search product")
+                             .contentId(
+                                 "search-bar-element")
+                             .build())
+                     .build())
+        .build();
+  }
 }

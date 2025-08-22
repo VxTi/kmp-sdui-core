@@ -11,9 +11,9 @@ import org.springframework.lang.Nullable;
 @Builder
 public class CoreConfig extends AbstractConfiguration
 {
-    public           String             appUrlScheme;
-    public           HemaWebEnvironment webEnvironment;
-    public @Nullable String             webBasicAuthPassword;
-    public @Nullable String             webBasicAuthUser;
-    public           String             staticFilesRootUrl;
+  public           String             appUrlScheme;
+  public           HemaWebEnvironment webEnvironment;
+  public @Nullable String             webBasicAuthPassword;
+  public @Nullable String             webBasicAuthUser;
+  public           String             staticFilesRootUrl;
 }

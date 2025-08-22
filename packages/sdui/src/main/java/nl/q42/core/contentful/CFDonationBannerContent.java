@@ -11,12 +11,12 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class CFDonationBannerContent implements CFContentItem
 {
-    public @Builder.Default String type = "donation-banner";
-    public @Nullable        String about;
-    public @Nullable        String conditions;
-    public                  String id;
-    public                  String bannerImageUrl;
-    public                  String mainImageUrl;
-    public                  String charityName;
-    public                  String charityId;
+  public @Builder.Default String type = "donation-banner";
+  public @Nullable        String about;
+  public @Nullable        String conditions;
+  public                  String id;
+  public                  String bannerImageUrl;
+  public                  String mainImageUrl;
+  public                  String charityName;
+  public                  String charityId;
 }

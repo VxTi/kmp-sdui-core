@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AccountMenuScreenRoute implements IScreenRoute
 {
-    @GetMapping(
-            path = "/account-menu",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ScreenResponseWithCache getAccountScreen(@RequestAttribute("request") BasicClientRequest request)
-    {
-        return new ScreenResponseWithCache(AccountMenuScreen.create(request.context), null, request.context);
-    }
+  @GetMapping(
+      path = "/account-menu",
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public ScreenResponseWithCache getAccountScreen(@RequestAttribute("request") BasicClientRequest request)
+  {
+    return new ScreenResponseWithCache(
+        AccountMenuScreen.create(request.context), null, request.context);
+  }
 }

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ContentfulConfig extends AbstractConfiguration
 {
-    public String spaceId;
-    public String accessToken;
-    public String environment;
+  public String spaceId;
+  public String accessToken;
+  public String environment;
 }

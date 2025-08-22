@@ -12,20 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 public class ContentInfoMessage
 {
-    public           String            id;
-    public @Nullable String            title;
-    public @Nullable String            message;
-    public @Nullable ContentButtonLink button;
+  public           String            id;
+  public @Nullable String            title;
+  public @Nullable String            message;
+  public @Nullable ContentButtonLink button;
 
-    public static ContentInfoMessage from(
-            CFInfoMessageContent content,
-            List<Link> links)
-    {
-        return new ContentInfoMessage(
-                content.id,
-                content.title,
-                content.message,
-                content.button == null ? null : ContentButtonLink.from(content.button, links)
-        );
-    }
+  public static ContentInfoMessage from(
+      CFInfoMessageContent content,
+      List<Link> links)
+  {
+    return new ContentInfoMessage(
+        content.id,
+        content.title,
+        content.message,
+        content.button == null ? null : ContentButtonLink.from(content.button, links)
+    );
+  }
 }

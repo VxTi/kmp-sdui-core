@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RecommendationData
 {
-    public String recommenderName;
-    public String __recoUUID;
-    public String[] productIds;
+  public String   recommenderName;
+  public String   __recoUUID;
+  public String[] productIds;
 }

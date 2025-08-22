@@ -10,9 +10,9 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class OpenApiParameter
 {
-    public           String                 name;
-    public @Nullable String                 description;
-    public           ParameterLocation      in;
-    public           boolean                required;
-    public           OpenApiParameterSchema schema;
+  public           String                 name;
+  public @Nullable String                 description;
+  public           ParameterLocation      in;
+  public           boolean                required;
+  public           OpenApiParameterSchema schema;
 }

@@ -7,6 +7,6 @@ import java.io.Serializable;
 @Data
 public class ScreenTab implements Serializable
 {
-    public String tabId;
-    public SectionContainer content;
+  public String           tabId;
+  public SectionContainer content;
 }

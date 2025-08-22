@@ -7,16 +7,16 @@ import org.springframework.lang.Nullable;
 public class OpenApiParameterSchema
 {
 
-    public           Type     type;
-    public @Nullable String[] enumerable;
+  public           Type     type;
+  public @Nullable String[] enumerable;
 
-    @Getter
-    @RequiredArgsConstructor
-    public enum Type
-    {
-        STRING("string"),
-        BOOLEAN("boolean"),
-        INTEGER("integer");
-        private final String value;
-    }
+  @Getter
+  @RequiredArgsConstructor
+  public enum Type
+  {
+    STRING("string"),
+    BOOLEAN("boolean"),
+    INTEGER("integer");
+    private final String value;
+  }
 }

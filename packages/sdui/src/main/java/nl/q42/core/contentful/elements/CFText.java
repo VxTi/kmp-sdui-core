@@ -7,9 +7,9 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class CFText implements CFTextElement
 {
-    public final String type = "text";
-    public @Nullable Boolean isBold;
-    public @Nullable Boolean isItalic;
-    public @Nullable Boolean isUnderline;
-    public final String value;
+  public final     String  type = "text";
+  public final     String  value;
+  public @Nullable Boolean isBold;
+  public @Nullable Boolean isItalic;
+  public @Nullable Boolean isUnderline;
 }

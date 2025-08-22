@@ -13,27 +13,27 @@ import org.springframework.lang.Nullable;
 @Builder
 public class ScreenAction extends AbstractAction
 {
-    public final     String                            type = "SCREEN";
-    public @Nullable String                            accessibilityDescription;
-    public @Nullable BFFEvent[]                        onSuccessEvents;
-    public @Nullable SideEffect[]                      onExecute;
-    public           PresentationStyle                 presentationStyle;
-    public final     String                            url;
-    public final     AbstractScreen                    placeholderContent;
-    public @Nullable ScreenQueryParameterPlaceholder[] queryParameterResolvers;
+  public final     String                            type = "SCREEN";
+  public final     String                            url;
+  public final     AbstractScreen                    placeholderContent;
+  public @Nullable String                            accessibilityDescription;
+  public @Nullable BFFEvent[]                        onSuccessEvents;
+  public @Nullable SideEffect[]                      onExecute;
+  public           PresentationStyle                 presentationStyle;
+  public @Nullable ScreenQueryParameterPlaceholder[] queryParameterResolvers;
 
-    public enum PresentationStyle
-    {
-        DETAIL,
-        MODAL,
-        SHEET
-    }
+  public enum PresentationStyle
+  {
+    DETAIL,
+    MODAL,
+    SHEET
+  }
 
-    public enum ScreenQueryParameterPlaceholder
-    {
-        PROFILE_FAVORITE_STORE_ID,
-        PROFILE_LAST_SELECTED_STORE_ID,
-        SEARCH_HISTORY,
-        SEARCH_QUERY;
-    }
+  public enum ScreenQueryParameterPlaceholder
+  {
+    PROFILE_FAVORITE_STORE_ID,
+    PROFILE_LAST_SELECTED_STORE_ID,
+    SEARCH_HISTORY,
+    SEARCH_QUERY
+  }
 }

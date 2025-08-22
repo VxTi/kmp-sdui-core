@@ -11,13 +11,13 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class ContentPromoCampaignEvent implements ContentItem
 {
-    public final     String               type = "promo-campaign-event";
-    public final     String               id;
-    public final     CFCampaignEventColor color;
-    public final     String               displayTitle;
-    public @Nullable String               displaySubtitle;
-    public final     String               accessibilityTitle;
-    public @Nullable LookupDestination    destination;
-    public @Nullable Carousel             carousel;
-    public final     String               imageUrl;
+  public final     String               type = "promo-campaign-event";
+  public final     String               id;
+  public final     CFCampaignEventColor color;
+  public final     String               displayTitle;
+  public final     String               accessibilityTitle;
+  public final     String               imageUrl;
+  public @Nullable String               displaySubtitle;
+  public @Nullable LookupDestination    destination;
+  public @Nullable Carousel             carousel;
 }

@@ -8,8 +8,8 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class ScreenCacheData
 {
-    public @Nullable String[] favoriteProductIds;
-    public @Nullable BasketItem[] basketItems;
-    public int basketItemCount = 0;
-    public int pointBalance = 0;
+  public @Nullable String[]     favoriteProductIds;
+  public @Nullable BasketItem[] basketItems;
+  public           int          basketItemCount = 0;
+  public           int          pointBalance    = 0;
 }

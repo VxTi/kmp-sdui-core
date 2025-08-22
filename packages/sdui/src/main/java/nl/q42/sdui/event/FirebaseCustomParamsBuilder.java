@@ -5,12 +5,12 @@ import java.util.Map;
 
 public class FirebaseCustomParamsBuilder
 {
-    private final Map<String, Object> params;
+  private final Map<String, Object> params;
 
-    public FirebaseCustomParamsBuilder()
-    {
-        this.params = new HashMap<String, Object>();
-    }
+  public FirebaseCustomParamsBuilder()
+  {
+    this.params = new HashMap<String, Object>();
+  }
 
 
 }

@@ -8,6 +8,6 @@ import nl.q42.sdui.RequiresAppVersion;
 @SuperBuilder
 public class SpacerComponent extends AbstractComponent
 {
-    public final int size;
-    public final @Builder.Default String type = "SPACER";
+  public final                  int    size;
+  public final @Builder.Default String type = "SPACER";
 }

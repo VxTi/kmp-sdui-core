@@ -13,12 +13,12 @@ import org.springframework.lang.Nullable;
 public class CFRegularCampaignEventContent implements CFContentItem
 {
 
-    public @Builder.Default String               type = "regular-campaign-event";
-    public @Nullable String     displaySubtitle;
-    public @Nullable CFCarousel carousel;
-    public           String     id;
-    public                  CFCampaignEventColor color;
-    public                  String               displayTitle;
-    public                  String               accessibilityTitle;
-    public                  String               url;
+  public @Builder.Default String               type = "regular-campaign-event";
+  public @Nullable        String               displaySubtitle;
+  public @Nullable        CFCarousel           carousel;
+  public                  String               id;
+  public                  CFCampaignEventColor color;
+  public                  String               displayTitle;
+  public                  String               accessibilityTitle;
+  public                  String               url;
 }

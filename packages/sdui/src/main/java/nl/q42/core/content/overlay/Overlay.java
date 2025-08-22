@@ -8,8 +8,8 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class Overlay
 {
-    public @Nullable OverlayItem topLeft;
-    public @Nullable OverlayItem topRight;
-    public @Nullable OverlayItem bottomLeft;
-    public @Nullable OverlayItem bottomRight;
+  public @Nullable OverlayItem topLeft;
+  public @Nullable OverlayItem topRight;
+  public @Nullable OverlayItem bottomLeft;
+  public @Nullable OverlayItem bottomRight;
 }

@@ -12,9 +12,9 @@ import org.springframework.lang.Nullable;
 public class CFRecallContent implements CFInspectableContent,
                                         CFContentItem
 {
-    public final     String                   type = "recall-content";
-    public           String                   id;
-    public @Nullable CFProductRecallContent[] products;
-    public @Nullable CFContent                text;
-    public @Nullable String                   url;
+  public final     String                   type = "recall-content";
+  public           String                   id;
+  public @Nullable CFProductRecallContent[] products;
+  public @Nullable CFContent                text;
+  public @Nullable String                   url;
 }

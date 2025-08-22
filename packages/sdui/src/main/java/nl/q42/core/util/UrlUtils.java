@@ -9,66 +9,66 @@ import java.util.Objects;
 public class UrlUtils
 {
 
-    /**
-     * Create a URL from a string, return null if a parsing exception occurs
-     *
-     * @param url the url to create
-     * @return the URL or null if the url is invalid
-     */
-    public static URL createUrl(String url)
+  /**
+   * Create a URL from a string, return null if a parsing exception occurs
+   *
+   * @param url the url to create
+   * @return the URL or null if the url is invalid
+   */
+  public static URL createUrl(String url)
+  {
+    try
     {
-        try
-        {
-            return URI.create(url).toURL();
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+      return URI.create(url).toURL();
     }
-
-    /**
-     * Create a URL from a string, return null if the url is invalid
-     *
-     * @param url the url to create
-     * @return the URL or null if the url is invalid
-     */
-    public static @Nullable URL createHttpUrl(String url)
+    catch (Exception e)
     {
-        try
-        {
-            // url must contain a scheme
-            if ( url.startsWith("http") )
-                return createUrl(url);
-
-            // other schema
-            if ( url.matches("^\\w+://") || url.startsWith("/") )
-                return null;
-
-            return createUrl("https://" + url);
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+      return null;
     }
+  }
 
-    /**
-     * Clean the pathname of a URL
-     * This will remove any trailing slashes, and return just the pathname
-     *
-     * @param url the url to clean
-     * @return the cleaned pathname or null if the url is invalid
-     */
-    public static String cleanUrlPathname(String url)
+  /**
+   * Create a URL from a string, return null if the url is invalid
+   *
+   * @param url the url to create
+   * @return the URL or null if the url is invalid
+   */
+  public static @Nullable URL createHttpUrl(String url)
+  {
+    try
     {
-        try
-        {
-            return Objects.requireNonNull(createUrl(url)).getPath().replaceFirst("/+$", "");
-        }
-        catch ( Exception e )
-        {
-            return null;
-        }
+      // url must contain a scheme
+      if (url.startsWith("http"))
+        return createUrl(url);
+
+      // other schema
+      if (url.matches("^\\w+://") || url.startsWith("/"))
+        return null;
+
+      return createUrl("https://" + url);
     }
+    catch (Exception e)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * Clean the pathname of a URL
+   * This will remove any trailing slashes, and return just the pathname
+   *
+   * @param url the url to clean
+   * @return the cleaned pathname or null if the url is invalid
+   */
+  public static String cleanUrlPathname(String url)
+  {
+    try
+    {
+      return Objects.requireNonNull(createUrl(url)).getPath().replaceFirst("/+$", "");
+    }
+    catch (Exception e)
+    {
+      return null;
+    }
+  }
 }

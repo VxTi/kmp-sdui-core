@@ -12,6 +12,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SearchParams extends SearchQueryParams
 {
-    public @Nullable Map<String, String[]> filters;
+  public @Nullable Map<String, String[]> filters;
 
 }

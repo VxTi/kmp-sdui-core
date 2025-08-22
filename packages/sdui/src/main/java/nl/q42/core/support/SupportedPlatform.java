@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum SupportedPlatform
 {
-    ANDROID("android"),
-    IOS("ios");
+  ANDROID("android"),
+  IOS("ios");
 
-    private final String platform;
+  private final String platform;
 }

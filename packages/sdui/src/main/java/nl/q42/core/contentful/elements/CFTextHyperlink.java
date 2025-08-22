@@ -8,7 +8,7 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class CFTextHyperlink
 {
-    public final String type = "hyperlink";
-    public @Nullable String url;
-    public final String value;
+  public final     String type = "hyperlink";
+  public final     String value;
+  public @Nullable String url;
 }

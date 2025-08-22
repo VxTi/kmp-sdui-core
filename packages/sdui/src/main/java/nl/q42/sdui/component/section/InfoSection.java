@@ -9,10 +9,10 @@ import org.springframework.lang.Nullable;
 public class InfoSection extends AbstractSection
 {
 
-    public final     String              type = "INFO";
-    public           AbstractComponent[] components;
-    public @Nullable LoadComponents      nextPage;
-    public           boolean             isUsingSpacerComponents;
-    //public @Nullable PlainButton button;
+  public final     String              type = "INFO";
+  public           AbstractComponent[] components;
+  public @Nullable LoadComponents      nextPage;
+  public           boolean             isUsingSpacerComponents;
+  //public @Nullable PlainButton button;
 
 }

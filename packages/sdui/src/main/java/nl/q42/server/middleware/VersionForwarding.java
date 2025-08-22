@@ -22,51 +22,51 @@ import java.util.stream.Collectors;
 public class VersionForwarding extends OncePerRequestFilter
 {
 
-    static final Pattern VERSION_PATTERN = Pattern.compile("^/(v\\d+|future)(/.*)$");
+  static final Pattern VERSION_PATTERN = Pattern.compile("^/(v\\d+|future)(/.*)$");
 
-    @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain) throws ServletException, IOException
+  @Override
+  protected void doFilterInternal(
+      HttpServletRequest request,
+      HttpServletResponse response,
+      FilterChain filterChain) throws ServletException, IOException
+  {
+
+    Matcher matcher = VERSION_PATTERN.matcher(request.getRequestURI());
+    if (!matcher.matches())
     {
-
-        Matcher matcher = VERSION_PATTERN.matcher(request.getRequestURI());
-        if ( !matcher.matches() )
-        {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        int appVersion = matcher.group(1).equals("future") ? -1 :
-                         Integer.parseInt(matcher.group(1).substring(1));
-
-        String newUri = matcher.group(2);
-        AppContext context = AppContext.builder()
-                                       .version(appVersion)
-                                       .build();
-
-        log.info(
-                "Headers: {}, body: {}", request.getHeaderNames(),
-                request.getReader().lines().reduce("", String::concat)
-                );
-
-        Map<String, String> headers =
-                Collections.list(request.getHeaderNames())
-                           .stream()
-                           .collect(Collectors.toMap(
-                                   name -> name,
-                                   request::getHeader
-                                                    ));
-
-        var body = request.getReader().lines().reduce("", String::concat);
-
-        request.setAttribute("request", new BasicClientRequest(body, headers, context, null));
-        request.getRequestDispatcher(newUri).forward(request, response);
-
-        log.info(
-                "Forwarding request to {} with version {}", newUri,
-                appVersion == -1 ? "future" : appVersion
-                );
+      filterChain.doFilter(request, response);
+      return;
     }
+
+    int appVersion = matcher.group(1).equals("future") ? -1 :
+                     Integer.parseInt(matcher.group(1).substring(1));
+
+    String newUri = matcher.group(2);
+    AppContext context = AppContext.builder()
+                                   .version(appVersion)
+                                   .build();
+
+    log.info(
+        "Headers: {}, body: {}", request.getHeaderNames(),
+        request.getReader().lines().reduce("", String::concat)
+    );
+
+    Map<String, String> headers =
+        Collections.list(request.getHeaderNames())
+                   .stream()
+                   .collect(Collectors.toMap(
+                       name -> name,
+                       request::getHeader
+                   ));
+
+    var body = request.getReader().lines().reduce("", String::concat);
+
+    request.setAttribute("request", new BasicClientRequest(body, headers, context, null));
+    request.getRequestDispatcher(newUri).forward(request, response);
+
+    log.info(
+        "Forwarding request to {} with version {}", newUri,
+        appVersion == -1 ? "future" : appVersion
+    );
+  }
 }

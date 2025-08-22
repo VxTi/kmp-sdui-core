@@ -23,25 +23,25 @@ import java.util.List;
 public abstract class AbstractScreen implements Serializable
 {
 
-    public final            String                   id;
-    public final            String                   type;
-    public @Builder.Default boolean                  canRefresh               = true;
-    public @Builder.Default String[]                 tags                     = new String[ 0 ];
-    public @Nullable        AutoRefreshSetting       autoRefresh;
-    public @Builder.Default boolean                  maximizeScreenBrightness = false;
-    public @Nullable
-    @Singular               List<RefreshIdentifiers> refreshIds;
-    public @Nullable        AbstractHeader           header;
-    public @Nullable        BFFEvent[]               onReadyEvents;
-    public @Nullable        AnalyticsEvent[]         onAppearEvents;
-    public @Nullable        AbstractAction[]         onFirstAppearActions;
+  public final            String                   id;
+  public final            String                   type;
+  public @Builder.Default boolean                  canRefresh               = true;
+  public @Builder.Default String[]                 tags                     = new String[0];
+  public @Nullable        AutoRefreshSetting       autoRefresh;
+  public @Builder.Default boolean                  maximizeScreenBrightness = false;
+  public @Nullable
+  @Singular               List<RefreshIdentifiers> refreshIds;
+  public @Nullable        AbstractHeader           header;
+  public @Nullable        BFFEvent[]               onReadyEvents;
+  public @Nullable        AnalyticsEvent[]         onAppearEvents;
+  public @Nullable        AbstractAction[]         onFirstAppearActions;
 
-    /**
-     * This method returns the element with the given content ID.
-     *
-     * @param contentId The content ID of the element to return.
-     * @return The element with the given content ID, or null if no such element exists.
-     */
-    public abstract @Nullable AbstractContent getElementById(String contentId);
+  /**
+   * This method returns the element with the given content ID.
+   *
+   * @param contentId The content ID of the element to return.
+   * @return The element with the given content ID, or null if no such element exists.
+   */
+  public abstract @Nullable AbstractContent getElementById(String contentId);
 
 }

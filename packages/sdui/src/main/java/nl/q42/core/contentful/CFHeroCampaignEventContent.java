@@ -12,17 +12,17 @@ import org.springframework.lang.Nullable;
 @Builder
 public class CFHeroCampaignEventContent implements CFContentItem
 {
-    public @Builder.Default String               type = "hero-campaign-event";
-    public                  String               id;
-    public                  CFCampaignEventColor color;
-    public                  String               imageUrl;
-    public                  String               displayTitle;
-    public @Nullable        String               displaySubtitle;
-    public                  String               accessibilityTitle;
-    public                  String               url;
-    public @Nullable        String               imageOverlayTopLeftUrl;
-    public @Nullable        String               imageOverlayTopRightUrl;
-    public @Nullable        String               imageOverlayBottomLeftUrl;
-    public @Nullable        String               imageOverlayBottomRightUrl;
-    public @Nullable        CFCarouselContent    carousel;
+  public @Builder.Default String               type = "hero-campaign-event";
+  public                  String               id;
+  public                  CFCampaignEventColor color;
+  public                  String               imageUrl;
+  public                  String               displayTitle;
+  public @Nullable        String               displaySubtitle;
+  public                  String               accessibilityTitle;
+  public                  String               url;
+  public @Nullable        String               imageOverlayTopLeftUrl;
+  public @Nullable        String               imageOverlayTopRightUrl;
+  public @Nullable        String               imageOverlayBottomLeftUrl;
+  public @Nullable        String               imageOverlayBottomRightUrl;
+  public @Nullable        CFCarouselContent    carousel;
 }

@@ -8,8 +8,8 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class OverlayIconButton implements OverlayItem
 {
-    public final     String         type = "ICON_BUTTON";
-    public final     LocalImage     icon;
-    public @Nullable AbstractAction action;
-    public           int            size = 0;
+  public final     String         type = "ICON_BUTTON";
+  public final     LocalImage     icon;
+  public @Nullable AbstractAction action;
+  public           int            size = 0;
 }

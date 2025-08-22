@@ -11,12 +11,12 @@ import org.springframework.lang.Nullable;
 @SuperBuilder
 public class PrimaryMenuItemComponent extends AbstractComponent
 {
-    public final @Builder.Default String         type = "PRIMARY_MENU_ITEM";
-    @Builder.Default
-    @Nullable
-    public                        String[]       tags = new String[ 0 ];
-    public                        String         title;
-    public @Nullable              String         subtitle;
-    public                        AbstractImage  image;
-    public @Nullable              AbstractAction action;
+  public final @Builder.Default String         type = "PRIMARY_MENU_ITEM";
+  @Builder.Default
+  @Nullable
+  public                        String[]       tags = new String[0];
+  public                        String         title;
+  public @Nullable              String         subtitle;
+  public                        AbstractImage  image;
+  public @Nullable              AbstractAction action;
 }

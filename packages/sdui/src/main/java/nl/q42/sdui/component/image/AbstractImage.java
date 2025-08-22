@@ -8,6 +8,6 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 public class AbstractImage
 {
-    public final     String type;
-    public @Nullable String alt = null;
+  public final     String type;
+  public @Nullable String alt = null;
 }

@@ -12,7 +12,7 @@ target/
 *.iml
 *.ipr
 
-/env/
+/src/main/java/env/
 
 ### Eclipse ###
 .apt_generated

@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class AbstractAction implements Serializable
 {
 
-    public AbstractAction()
-    {
+  public AbstractAction()
+  {
 
-    }
+  }
 }

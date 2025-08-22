@@ -14,20 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class OnboardingScreenRoute implements IScreenRoute
 {
 
-    @GetMapping(
-            path = "/onboarding",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public BasicScreenResponse handle(@RequestAttribute("request") BasicClientRequest request)
+  @GetMapping(
+      path = "/onboarding",
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  public BasicScreenResponse handle(@RequestAttribute("request") BasicClientRequest request)
+  {
+    AbstractScreen screen;
+
+    switch (request.body)
     {
-        AbstractScreen screen;
-
-        switch (request.body) {
-            default:
-                screen = OnboardingScreen.create(request.context);
-                break;
-        }
-
-        return new BasicScreenResponse(screen, request.context);
+      default:
+        screen = OnboardingScreen.create(request.context);
+        break;
     }
+
+    return new BasicScreenResponse(screen, request.context);
+  }
 }

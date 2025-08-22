@@ -5,6 +5,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CFEinsteinRecommendations implements CFProductCarouselSource
 {
-    public final String type = "einstein-recommendations";
-    public final String recommenderName;
+  public final String type = "einstein-recommendations";
+  public final String recommenderName;
 }

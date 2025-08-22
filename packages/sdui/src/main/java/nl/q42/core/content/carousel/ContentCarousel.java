@@ -10,11 +10,11 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class ContentCarousel implements Carousel
 {
-    public final     String            type = "carousel";
-    public           String            id;
-    public @Nullable String            title;
-    public @Nullable String            subtitle;
-    public @Nullable LookupDestination destination;
-    public @Nullable String          destinationDescription;
-    public           ContentBanner[] items;
+  public final     String            type = "carousel";
+  public           String            id;
+  public @Nullable String            title;
+  public @Nullable String            subtitle;
+  public @Nullable LookupDestination destination;
+  public @Nullable String            destinationDescription;
+  public           ContentBanner[]   items;
 }

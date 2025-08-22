@@ -7,14 +7,14 @@ import org.springframework.lang.Nullable;
 public abstract class SearchQueryValidator<T>
 {
 
-    public ParameterLocation in;
-    public @Nullable String description;
-    public String name;
+  public           ParameterLocation in;
+  public @Nullable String            description;
+  public           String            name;
 
-    public static class OptionalStringValidator extends SearchQueryValidator<String>
+  public static class OptionalStringValidator extends SearchQueryValidator<String>
+  {
+    public OptionalStringValidator(ParameterLocation in, String name, @Nullable String description)
     {
-        public OptionalStringValidator(ParameterLocation in, String name, @Nullable String description)
-        {
-        }
     }
+  }
 }

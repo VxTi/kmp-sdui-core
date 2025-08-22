@@ -8,6 +8,6 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class CFInspectUrlResult
 {
-    public String originalUrl;
-    public @Nullable String inspectUrl;
+  public           String originalUrl;
+  public @Nullable String inspectUrl;
 }

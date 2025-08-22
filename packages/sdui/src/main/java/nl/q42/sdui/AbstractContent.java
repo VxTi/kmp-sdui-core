@@ -9,6 +9,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public abstract class AbstractContent implements Serializable
 {
-    public String contentId;
-    public String type;
+  public String contentId;
+  public String type;
 }

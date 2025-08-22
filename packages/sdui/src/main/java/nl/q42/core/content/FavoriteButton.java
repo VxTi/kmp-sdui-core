@@ -10,7 +10,7 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 public class FavoriteButton implements OverlayItem
 {
-    public final     String         type = "FAVORITE_BUTTON";
-    public @Nullable AbstractAction favoriteAction;
-    public @Nullable AbstractAction unFavoriteAction;
+  public final     String         type = "FAVORITE_BUTTON";
+  public @Nullable AbstractAction favoriteAction;
+  public @Nullable AbstractAction unFavoriteAction;
 }

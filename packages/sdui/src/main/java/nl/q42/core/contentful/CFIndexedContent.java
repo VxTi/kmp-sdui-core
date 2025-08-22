@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class CFIndexedContent<T>
 {
-    public String               id;
-    public CFInspectUrlResult[] inspectUrls;
-    public T                    content;
+  public String               id;
+  public CFInspectUrlResult[] inspectUrls;
+  public T                    content;
 }

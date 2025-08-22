@@ -10,15 +10,16 @@ import org.springframework.lang.Nullable;
 public class NormalButtonComponent extends AbstractButton
 {
 
-    public @Builder.Default final String         type = "NORMAL_BUTTON_COMPONENT";
-    public           DisplayType    displayType;
-    public           String         title;
-    public @Nullable LocalImage     icon;
-    public @Nullable String[]       loadingIds;
-    public @Nullable AbstractAction action;
+  public @Builder.Default
+  final            String         type = "NORMAL_BUTTON_COMPONENT";
+  public           DisplayType    displayType;
+  public           String         title;
+  public @Nullable LocalImage     icon;
+  public @Nullable String[]       loadingIds;
+  public @Nullable AbstractAction action;
 
-    public enum DisplayType
-    {
-        BUY, PRIMARY, SECONDARY
-    }
+  public enum DisplayType
+  {
+    BUY, PRIMARY, SECONDARY
+  }
 }

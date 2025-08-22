@@ -7,6 +7,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public abstract class AbstractHeader implements Serializable
 {
-    public final String type;
-    public final String title;
+  public final String type;
+  public final String title;
 }

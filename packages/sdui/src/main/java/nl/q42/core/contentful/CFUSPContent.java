@@ -11,9 +11,9 @@ import org.springframework.lang.Nullable;
 @RequiredArgsConstructor
 public class CFUSPContent implements CFContentItem, ContentItem
 {
-    public final     String           type = "usp";
-    public           String           id;
-    public           SupportedCountry country;
-    public @Nullable String           categoryId;
-    public @Nullable String[]         usps;
+  public final     String           type = "usp";
+  public           String           id;
+  public           SupportedCountry country;
+  public @Nullable String           categoryId;
+  public @Nullable String[]         usps;
 }

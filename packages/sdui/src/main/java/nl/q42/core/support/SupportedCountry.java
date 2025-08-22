@@ -7,26 +7,32 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum SupportedCountry
 {
-    NL("NL"),
-    BE("BE");
+  NL("NL"),
+  BE("BE");
 
-    private final String countryCode;
+  private final String countryCode;
 
-    public static boolean isSupportedCountry(String countryCode) {
-        for (SupportedCountry supportedCountry : SupportedCountry.values()) {
-            if (supportedCountry.getCountryCode().equals(countryCode)) {
-                return true;
-            }
-        }
-        return false;
+  public static boolean isSupportedCountry(String countryCode)
+  {
+    for (SupportedCountry supportedCountry : SupportedCountry.values())
+    {
+      if (supportedCountry.getCountryCode().equals(countryCode))
+      {
+        return true;
+      }
     }
+    return false;
+  }
 
-    public static SupportedCountry fromCountryCode(String countryCode) {
-        for (SupportedCountry supportedCountry : SupportedCountry.values()) {
-            if (supportedCountry.getCountryCode().equals(countryCode)) {
-                return supportedCountry;
-            }
-        }
-        throw new IllegalArgumentException("Country code " + countryCode + " is not supported");
+  public static SupportedCountry fromCountryCode(String countryCode)
+  {
+    for (SupportedCountry supportedCountry : SupportedCountry.values())
+    {
+      if (supportedCountry.getCountryCode().equals(countryCode))
+      {
+        return supportedCountry;
+      }
     }
+    throw new IllegalArgumentException("Country code " + countryCode + " is not supported");
+  }
 }

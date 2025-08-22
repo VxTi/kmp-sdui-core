@@ -11,11 +11,11 @@ import org.springframework.lang.Nullable;
 @SuperBuilder
 public class LoyaltySummaryComponent extends AbstractComponent
 {
-    public final @Builder.Default String         type = "LOYALTY_SUMMARY";
-    public @Nullable              String[]       tags;
-    public @Nullable              AbstractAction action;
-    public @Nullable              AbstractAction openLoyaltyCardAction;
-    public @Nullable              AbstractAction openLoginAction;
-    public @Nullable              AbstractAction openLoyaltyRegistrationAction;
+  public final @Builder.Default String         type = "LOYALTY_SUMMARY";
+  public @Nullable              String[]       tags;
+  public @Nullable              AbstractAction action;
+  public @Nullable              AbstractAction openLoyaltyCardAction;
+  public @Nullable              AbstractAction openLoginAction;
+  public @Nullable              AbstractAction openLoyaltyRegistrationAction;
 
 }

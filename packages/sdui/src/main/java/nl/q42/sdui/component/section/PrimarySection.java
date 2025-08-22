@@ -12,10 +12,10 @@ import java.util.List;
 @SuperBuilder
 public class PrimarySection extends AbstractSection
 {
-    public final @Builder.Default String type = "PRIMARY";
+  public final @Builder.Default String type = "PRIMARY";
 
-    public final @Singular List<AbstractComponent> components;
-    public @Builder.Default
-    final                  boolean                 isUsingSpacerComponents = false;
-    public @Nullable       LoadComponents          nextPage;
+  public final @Singular List<AbstractComponent> components;
+  public @Builder.Default
+  final                  boolean                 isUsingSpacerComponents = false;
+  public @Nullable       LoadComponents          nextPage;
 }

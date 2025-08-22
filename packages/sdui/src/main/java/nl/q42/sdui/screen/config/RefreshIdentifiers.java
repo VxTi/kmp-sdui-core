@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum RefreshIdentifiers
 {
-    VOUCHERS("vouchers"),
-    BASKET("basket"),
-    FAVORITES("favorites");
+  VOUCHERS("vouchers"),
+  BASKET("basket"),
+  FAVORITES("favorites");
 
-    private final String identifier;
+  private final String identifier;
 }

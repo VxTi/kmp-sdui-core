@@ -13,9 +13,9 @@ import org.springframework.lang.Nullable;
 public class CFContentCardContent implements CFContentItem, ContentItem
 {
 
-    public @Builder.Default String type = "content-card";
-    public                  String id;
-    public @Nullable        String imageUrl;
-    public                  String title;
-    public                  String body;
+  public @Builder.Default String type = "content-card";
+  public                  String id;
+  public @Nullable        String imageUrl;
+  public                  String title;
+  public                  String body;
 }

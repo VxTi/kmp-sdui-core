@@ -8,6 +8,6 @@ import nl.q42.core.config.AbstractConfiguration;
 @Builder
 public class ServerConfig extends AbstractConfiguration
 {
-    public boolean debugErrorResponse;
-    public int     nonPrimaryExternalServiceTimeoutMs;
+  public boolean debugErrorResponse;
+  public int     nonPrimaryExternalServiceTimeoutMs;
 }

@@ -9,16 +9,16 @@ import java.util.Map;
 @Slf4j
 public class Translations
 {
-    private static final Map<SupportedLocale, Map<String, String>> translationMap = new HashMap<>();
+  private static final Map<SupportedLocale, Map<String, String>> translationMap = new HashMap<>();
 
-    public static String translate(String key, SupportedLocale locale)
-    {
-        Map<String, String> languageMap = translationMap.get(locale);
-        if (languageMap == null)
-            return key;
+  public static String translate(String key, SupportedLocale locale)
+  {
+    Map<String, String> languageMap = translationMap.get(locale);
+    if (languageMap == null)
+      return key;
 
-        return languageMap.getOrDefault(key, key);
-    }
+    return languageMap.getOrDefault(key, key);
+  }
 /*
     static {
         try {
