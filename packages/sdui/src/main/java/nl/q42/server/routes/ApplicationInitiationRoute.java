@@ -3,30 +3,41 @@ package nl.q42.server.routes;
 import lombok.extern.slf4j.Slf4j;
 import nl.q42.core.RequestContext;
 import nl.q42.sdui.SDUIApplication;
+import nl.q42.sdui.screen.SDUIScreen;
+import nl.q42.sdui.screen.Screen;
 import nl.q42.server.middleware.MiddlewareConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.stream.Stream;
+
 @RestController
 @Slf4j(topic = "Application Initiation Route")
 public class ApplicationInitiationRoute
 {
 
+  public static final String ROUTE = "/";
+
   @GetMapping(
-      path = "/initiation",
+      path = ROUTE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public SDUIApplication applicationInitiation(
+  public SDUIApplication handler(
       @RequestAttribute(MiddlewareConfiguration.ATTRIB_APP_CONTEXT) RequestContext context
   )
   {
-    log.info("Application initiated - Locale: {} - Version: {} - Revalidate: {}", context.locale,
-             context.appVersion,
-             context.revalidateRequest
+    log.info(
+        "Application initiated - Locale: {} - Version: {} - Revalidate: {}", context.locale,
+        context.appVersion,
+        context.revalidateRequest
     );
 
-    return new SDUIApplication(context);
+    var tabs = Stream.of(SDUIScreen.tabScreens)
+        .flatMap(sduiTabScreen -> sduiTabScreen.tryInstantiate(context).stream())
+        .toArray(Screen[]::new);
+
+    return new SDUIApplication(context, null, tabs);
   }
 }

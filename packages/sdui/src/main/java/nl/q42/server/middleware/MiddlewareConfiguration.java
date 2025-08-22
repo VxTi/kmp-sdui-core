@@ -26,7 +26,7 @@ public class MiddlewareConfiguration implements WebMvcConfigurer
         .addInterceptor(new AppVersionMiddleware())
         .order(1);
     registry
-        .addInterceptor(new AppInitiationMiddleware())
+        .addInterceptor(new AppContextMiddleware())
         .order(2);
   }
 }

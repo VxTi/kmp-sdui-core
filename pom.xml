@@ -8,6 +8,7 @@
 
     <modules>
         <module>packages/sdui</module>
+        <module>packages/sdui-common</module>
         <!--<module>packages/app</module> Convert to maven-->
     </modules>
 </project>
