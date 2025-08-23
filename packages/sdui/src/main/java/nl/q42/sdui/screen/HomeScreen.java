@@ -1,23 +1,24 @@
 package nl.q42.sdui.screen;
 
+import org.springframework.stereotype.Component;
+
+import nl.q42.common.components.SpacerComponent;
+import nl.q42.common.components.TextColor;
+import nl.q42.common.components.TextFormatting;
 import nl.q42.core.RequestContext;
-import nl.q42.common.components.Component;
 import nl.q42.common.components.TextComponent;
-import nl.q42.sdui.screen.common.Screen;
+import nl.q42.common.screen.Screen;
 
-import java.util.List;
+@Component
+public class HomeScreen extends Screen {
 
-public class HomeScreen extends Screen
-{
-  public HomeScreen(RequestContext context, String screenName)
-  {
-    super(context, screenName);
-  }
+    public static final String SCREEN_NAME = "home";
 
-  @Override
-  public List<Component> getContent()
-  {
-    // Return a list of text components
-    return List.of(new TextComponent[]{new TextComponent("Hello world!", "test-1")});
-  }
+    public HomeScreen() {
+        super(SCREEN_NAME,
+                new TextComponent("Hello world!", TextColor.INFO, TextFormatting.BOLD, "test-1"),
+                new SpacerComponent(3, "test-spacer")
+        );
+    }
+
 }

@@ -1,4 +1,4 @@
-package nl.q42.sdui.screen.common;
+package nl.q42.common.screen;
 
 import java.io.Serializable;
 

@@ -1,21 +1,17 @@
 package nl.q42.sdui.screen;
 
-import nl.q42.core.RequestContext;
-import nl.q42.common.components.Component;
-import nl.q42.sdui.screen.common.Screen;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import nl.q42.common.screen.Screen;
 
+@Component
 public class ProfileScreen extends Screen
 {
-  public ProfileScreen(RequestContext context, String screenName)
-  {
-    super(context, screenName);
-  }
 
-  @Override
-  public List<Component> getContent()
+  public static final String SCREEN_NAME = "profile";
+
+  public ProfileScreen()
   {
-    return List.of();
+    super(SCREEN_NAME);
   }
 }

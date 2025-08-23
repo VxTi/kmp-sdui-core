@@ -8,16 +8,16 @@ WORKDIR /workspace
 # Copy Gradle wrapper and build files first to leverage Docker layer cache
 COPY gradlew .
 COPY gradle ./gradle
-COPY settings.gradle.kts ./
+COPY packages/sdui/build.gradle.kts ./
 COPY settings.gradle.kts ./
 
 # Pre-fetch dependencies (optional but speeds up subsequent builds)
 # The specific command might vary based on your project structure and plugins
 # This is a common way to download dependencies:
-RUN ./gradlew dependencies --info
+RUN ./gradlew :packages:sdui:dependencies --info
 
 # Now copy sources and build
-COPY src ./src
+COPY packages/sdui/src ./src
 RUN ./gradlew build -x test # Build the project, skipping tests
 
 # 2) Runtime stage

@@ -1,15 +1,17 @@
 plugins {
-    `java-library`
+    id("java-library")
 }
 
 group = "nl.q42"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(23))
+    }
 }
 
 dependencies {
+    // Jackson annotations for DTOs / shared models
     implementation("com.fasterxml.jackson.core:jackson-annotations:2.19.2")
 }

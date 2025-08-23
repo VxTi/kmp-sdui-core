@@ -1,4 +1,4 @@
-rootProject.name = "HEMA-SDUI-KMP-POC"
+rootProject.name = "sdui-cmp-poc"
 
 pluginManagement {
     repositories {

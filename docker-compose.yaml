@@ -2,7 +2,7 @@ services:
   sdui-application:
     # Build image from the Dockerfile in this directory
     build:
-      context: .
+      context: packages/sdui
       dockerfile: Dockerfile
     container_name: sdui-application
     ports:

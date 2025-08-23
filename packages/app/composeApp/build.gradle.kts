@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.compose)
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlinx.serialization) // Added Kotlinx Serialization plugin
 }
 
 kotlin {
@@ -39,6 +40,17 @@ kotlin {
             implementation(libs.coil)
             implementation(libs.coil.network.ktor)
             implementation(libs.multiplatformSettings)
+
+            // Ktor for networking
+            implementation(libs.ktor.client.core)
+            // CIO is a common engine, ensure you have an appropriate engine for all your targets
+            // For example, for Android you might use ktor-client-okhttp
+            // For iOS you might use ktor-client-darwin
+            implementation(libs.ktor.client.cio) // Example engine, adjust as needed for all targets
+            implementation(libs.ktor.client.contentnegotiation)
+
+            // Kotlinx Serialization for JSON parsing
+            implementation(libs.kotlinx.serialization.json)
         }
 
         commonTest.dependencies {
@@ -50,7 +62,14 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
+            // If you use a specific Ktor engine for Android like OkHttp, add it here or in commonMain
+            // implementation(libs.ktor.client.okhttp)
         }
+
+        // Add Ktor client engine for iOS if needed (e.g., Darwin)
+        // getByName("iosMain").dependencies {
+        //     implementation(libs.ktor.client.darwin)
+        // }
 
     }
 }
@@ -84,4 +103,6 @@ dependencies {
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
     }
+
+    implementation(project(":sdui-common"))
 }
