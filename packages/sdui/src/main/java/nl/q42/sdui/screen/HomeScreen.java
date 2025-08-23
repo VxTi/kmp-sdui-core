@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import nl.q42.common.components.SpacerComponent;
 import nl.q42.common.components.TextColor;
 import nl.q42.common.components.TextFormatting;
-import nl.q42.core.RequestContext;
 import nl.q42.common.components.TextComponent;
 import nl.q42.common.screen.Screen;
 

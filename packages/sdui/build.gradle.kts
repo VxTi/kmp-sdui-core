@@ -1,11 +1,12 @@
-plugins {
-    id("java")
-    id("org.springframework.boot") version "3.4.1"
-    id("io.spring.dependency-management") version "1.1.0"
-}
-
 group = "nl.q42"
 version = "1.0"
+
+plugins {
+    id("java")
+    id("org.springframework.boot") version "3.5.5"
+    id("io.spring.dependency-management") version "1.1.7"
+    kotlin("jvm")
+}
 
 java {
     toolchain {
@@ -15,21 +16,22 @@ java {
 
 dependencies {
 
-    implementation(platform("software.amazon.awssdk:bom:2.32.29"))
-    implementation("software.amazon.awssdk:dynamodb-enhanced")
+    implementation(platform(libs.bom))
+    implementation(libs.dynamodb.enhanced)
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("jakarta.persistence:jakarta.persistence-api:3.2.0")
+    implementation(libs.spring.boot.starter.web)
+    implementation(libs.jakarta.persistence.api)
 
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("org.apache.commons:commons-dbcp2:2.12.0")
-    implementation("org.mindrot:jbcrypt:0.4")
+    implementation(libs.jackson.databind)
+    implementation(libs.gson)
+    implementation(libs.commons.dbcp2)
+    implementation(libs.jbcrypt)
 
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
 
-    implementation(project(":sdui-common"))
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(project(":packages:sdui-common"))
 }
 
 sourceSets {

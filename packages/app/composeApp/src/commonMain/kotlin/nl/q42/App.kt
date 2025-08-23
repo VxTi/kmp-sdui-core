@@ -14,24 +14,9 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
-import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import nl.q42.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-@Serializable
-data class ScreenElement(
-    val type: String, // "text" for now
-    val content: String? = null // Content for text type
-    // Add other properties for different element types here
-)
-
-@Serializable
-data class ScreenResponse(
-    val screen: List<ScreenElement>
-)
-
+import nl.q42.common.screen.Screen;
 private val httpClient = HttpClient {
     install(ContentNegotiation) {
         json(Json {
@@ -41,7 +26,7 @@ private val httpClient = HttpClient {
     }
 }
 
-suspend fun fetchScreen(url: String): ScreenResponse? {
+suspend fun fetchScreen(url: String): Screen? {
     return try {
         httpClient.get(url).body<ScreenResponse>()
     } catch (e: Exception) {

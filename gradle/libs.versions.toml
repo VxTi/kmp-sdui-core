@@ -1,15 +1,24 @@
 [versions]
 
+bom = "2.32.29"
+commonsDbcp2 = "2.13.0"
+gson = "2.13.1"
+jacksonAnnotations = "2.19.2"
+jacksonDatabind = "2.19.2"
+jakartaPersistenceApi = "3.2.0"
+jbcrypt = "0.4"
 kotlin = "2.2.20-RC"
 compose = "1.9.0-beta03"
-agp = "8.10.0"
+agp = "8.13.0-rc01"
 androidx-activityCompose = "1.10.1"
 androidx-uiTest = "1.8.1"
 androidx-navigation = "2.9.0-beta05"
 kotlinInject = "0.8.0"
 ksp = "2.2.20-RC-2.0.2"
 coil = "3.3.0"
+lombok = "1.18.38"
 multiplatformSettings = "1.3.0"
+springBoot = "3.5.5"
 
 [libraries]
 
@@ -17,11 +26,21 @@ androidx-activityCompose = { module = "androidx.activity:activity-compose", vers
 androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-uiTest" }
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
+bom = { module = "software.amazon.awssdk:bom", version.ref = "bom" }
+commons-dbcp2 = { module = "org.apache.commons:commons-dbcp2", version.ref = "commonsDbcp2" }
+dynamodb-enhanced = { module = "software.amazon.awssdk:dynamodb-enhanced" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotations" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
+jakarta-persistence-api = { module = "jakarta.persistence:jakarta.persistence-api", version.ref = "jakartaPersistenceApi" }
+jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
 kotlinInject = { module = "me.tatarka.inject:kotlin-inject-runtime-kmp", version.ref = "kotlinInject" }
 kotlinInjectKsp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlinInject" }
 coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
 
 [plugins]
 

@@ -1,12 +1,9 @@
 rootProject.name = "sdui-cmp-poc"
 
-include("app")
-include("sdui-common")
-include("sdui")
-
-project(":sdui").projectDir = File(rootDir, "packages/sdui/")
-project(":sdui-common").projectDir = File(rootDir, "packages/sdui-common/")
-project(":app").projectDir = File(rootDir, "packages/app/")
+include(":packages:app")
+include(":packages:sdui-common")
+include(":packages:sdui")
+include(":packages:app:composeApp")
 
 pluginManagement {
     repositories {
@@ -21,6 +18,12 @@ pluginManagement {
             }
         }
     }
+    plugins {
+        kotlin("jvm") version "2.2.0"
+    }
+}
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

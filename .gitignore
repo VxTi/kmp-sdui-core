@@ -19,3 +19,5 @@ Pods/
 gradle/.tmp
 gradle/caches
 gradle/daemon
+gradle/wrapper/dists
+gradle/native
