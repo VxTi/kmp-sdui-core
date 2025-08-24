@@ -23,7 +23,7 @@ class ScreenRoute(private val registry: ScreenRegistry) {
     @GetMapping(path = [ROUTE], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Throws(ScreenNotFoundException::class)
     fun handler(
-        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext?,
+        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext,
         @RequestParam(SEARCH_PARAM_SCREEN_IDENTIFIER) screenIdentifier: String
     ): ScreenResponse? {
         if (screenIdentifier.isEmpty()) {
@@ -33,7 +33,7 @@ class ScreenRoute(private val registry: ScreenRegistry) {
 
         log.info("Incoming screen request for ID \"{}\"", screenIdentifier)
 
-        val screen: Screen? = registry.getByIdentifier(screenIdentifier)
+        val screen: Screen? = registry.getByIdentifier(screenIdentifier, context)
 
         if (screen == null) {
             throw ScreenNotFoundException(

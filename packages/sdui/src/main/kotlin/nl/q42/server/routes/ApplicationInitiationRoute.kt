@@ -26,7 +26,7 @@ class ApplicationInitiationRoute(private val registry: ScreenRegistry) {
             context.appVersion,
         )
 
-        val screen = registry.defaultScreen();
+        val screen = registry.defaultScreen(context);
 
         return ScreenResponse(screen, tabs = ScreenRegistry.SCREEN_TABS);
     }

@@ -5,7 +5,7 @@ import nl.q42.common.components.ComponentTypes
 import kotlinx.serialization.Serializable
 
 @Serializable
-abstract class Screen {
+class Screen {
     val type: String = ComponentTypes.SCREEN
 
     val name: String;

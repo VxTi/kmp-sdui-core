@@ -22,7 +22,6 @@ kotlin {
             dependencies {
                 implementation(libs.kotlinx.serialization.json)
                 api(libs.jackson.annotations)
-                implementation(libs.lombok)
             }
         }
     }

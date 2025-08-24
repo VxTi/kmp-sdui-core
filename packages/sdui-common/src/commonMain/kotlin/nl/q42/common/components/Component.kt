@@ -1,6 +1,11 @@
 package nl.q42.common.components
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.*
+import kotlinx.serialization.json.JsonClassDiscriminator
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
-abstract class Component(val type: String, val contentId: String)
+@JsonClassDiscriminator("type")
+sealed class Component(val type: String) {
+    abstract val contentId: String
+}

@@ -5,4 +5,6 @@ object ComponentTypes {
     const val TEXT: String = "text"
     const val IMAGE: String = "image"
     const val SPACER: String = "spacer"
+    const val SEARCH_BAR: String = "search_bar"
+    const val BUTTON: String = "button"
 }
