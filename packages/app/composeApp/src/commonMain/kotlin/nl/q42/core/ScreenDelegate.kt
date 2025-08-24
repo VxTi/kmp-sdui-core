@@ -12,6 +12,7 @@ import nl.q42.common.RequestHeader
 import nl.q42.common.ScreenResponse
 import nl.q42.common.core.AppIdentity
 import nl.q42.common.core.Locale
+import nl.q42.local.getLocalDevelopmentUri
 
 
 private val httpClient = HttpClient {
@@ -24,7 +25,7 @@ private val httpClient = HttpClient {
     }
 }
 
-private const val SERVER_BASE_URI = "http://10.0.2.2:8080"
+private val SERVER_BASE_URI = getLocalDevelopmentUri();
 
 suspend fun fetchScreen(id: String): ScreenResponse? {
     return try {
