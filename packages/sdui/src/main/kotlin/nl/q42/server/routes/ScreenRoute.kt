@@ -1,12 +1,12 @@
 package nl.q42.server.routes
 
 import lombok.extern.slf4j.Slf4j
+import nl.q42.common.RequestHeader
+import nl.q42.common.ScreenResponse
 import nl.q42.common.screen.Screen
 import nl.q42.core.RequestContext
 import nl.q42.core.exceptions.ScreenNotFoundException
-import nl.q42.sdui.SDUIApplication
 import nl.q42.sdui.ScreenRegistry
-import nl.q42.server.middleware.MiddlewareConfiguration
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,24 +20,18 @@ class ScreenRoute(private val registry: ScreenRegistry) {
 
     private val log = LoggerFactory.getLogger(ScreenRoute::class.java)
 
-    init {
-        for (screen in registry.all) {
-            log.info("Found screen: {}", screen.name)
-        }
-    }
-
     @GetMapping(path = [ROUTE], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Throws(ScreenNotFoundException::class)
     fun handler(
-        @RequestAttribute(MiddlewareConfiguration.Companion.ATTRIB_APP_CONTEXT) context: RequestContext?,
+        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext?,
         @RequestParam(SEARCH_PARAM_SCREEN_IDENTIFIER) screenIdentifier: String
-    ): SDUIApplication? {
+    ): ScreenResponse? {
         if (screenIdentifier.isEmpty()) {
             log.warn("Screen identifier is missing")
             return null
         }
 
-        log.info("Retrieving screen with identifier: {}", screenIdentifier)
+        log.info("Incoming screen request for ID \"{}\"", screenIdentifier)
 
         val screen: Screen? = registry.getByIdentifier(screenIdentifier)
 
@@ -50,7 +44,7 @@ class ScreenRoute(private val registry: ScreenRegistry) {
             )
         }
 
-        return SDUIApplication(screen);
+        return ScreenResponse(screen);
     }
 
     companion object {

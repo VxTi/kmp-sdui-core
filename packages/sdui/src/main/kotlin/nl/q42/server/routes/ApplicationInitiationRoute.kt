@@ -1,10 +1,9 @@
 package nl.q42.server.routes
 
-import nl.q42.common.actions.NavigationAction
+import nl.q42.common.RequestHeader
+import nl.q42.common.ScreenResponse
 import nl.q42.core.RequestContext
-import nl.q42.sdui.SDUIApplication
 import nl.q42.sdui.ScreenRegistry
-import nl.q42.sdui.screen.HomeScreen
 import nl.q42.server.middleware.MiddlewareConfiguration
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
@@ -20,19 +19,16 @@ class ApplicationInitiationRoute(private val registry: ScreenRegistry) {
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun handler(
-        @RequestAttribute(MiddlewareConfiguration.ATTRIB_APP_CONTEXT) context: RequestContext
-    ): SDUIApplication? {
+        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext
+    ): ScreenResponse? {
         log.info(
-            "Application initiated - Locale: {} - Version: {} - Revalidate: {}", context.locale,
+            "Application initiated - Locale: {} - Version: {}", context.locale,
             context.appVersion,
-            context.revalidateRequest
         )
 
-        return SDUIApplication(registry.getByIdentifier(HomeScreen.SCREEN_NAME))
-            .tabs(ScreenRegistry.Companion.SCREEN_TABS)
-            .screen(registry.getByIdentifier(HomeScreen.SCREEN_NAME))
-            .onLoadAction(NavigationAction("home", false))
-            .build()
+        val screen = registry.defaultScreen();
+
+        return ScreenResponse(screen, tabs = ScreenRegistry.SCREEN_TABS);
     }
 
     companion object {

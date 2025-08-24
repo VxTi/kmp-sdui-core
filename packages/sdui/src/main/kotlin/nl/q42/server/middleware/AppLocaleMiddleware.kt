@@ -3,7 +3,8 @@ package nl.q42.server.middleware
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import lombok.extern.slf4j.Slf4j
-import nl.q42.core.Locale
+import nl.q42.common.RequestHeader
+import nl.q42.common.core.Locale
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 
@@ -15,12 +16,12 @@ class AppLocaleMiddleware : HandlerInterceptor {
         response: HttpServletResponse,
         handler: Any
     ): Boolean {
-        val appLocale: Locale? = Locale.Companion.from(
-            request.getHeader(MiddlewareConfiguration.Companion.HEADER_APP_LOCALE),
+        val appLocale: Locale = Locale.from(
+            request.getHeader(RequestHeader.HEADER_APP_LOCALE),
             DEFAULT_LOCALE
         )
 
-        request.setAttribute(MiddlewareConfiguration.Companion.ATTRIB_LOCALE, appLocale)
+        request.setAttribute(RequestHeader.ATTRIB_LOCALE, appLocale)
 
         return true
     }

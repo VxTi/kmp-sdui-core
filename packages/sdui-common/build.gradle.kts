@@ -1,13 +1,10 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("jvm") apply false
     id("com.android.library")
-}
 
-dependencies {
-    implementation(libs.kotlinx.serialization.json)
-    api(libs.jackson.annotations)
-    implementation(libs.lombok)
+    // Required for Serialization
+    kotlin("jvm") apply false
+    kotlin("plugin.serialization")
 }
 
 group = "nl.q42"
@@ -19,6 +16,16 @@ kotlin {
     iosSimulatorArm64()
     jvm()
     androidTarget {}
+
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.kotlinx.serialization.json)
+                api(libs.jackson.annotations)
+                implementation(libs.lombok)
+            }
+        }
+    }
 }
 
 android {

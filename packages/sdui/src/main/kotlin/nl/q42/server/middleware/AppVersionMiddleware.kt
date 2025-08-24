@@ -3,37 +3,37 @@ package nl.q42.server.middleware
 import com.google.gson.Gson
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import lombok.extern.slf4j.Slf4j
-import nl.q42.sdui.SDUIApplication
+import nl.q42.common.RequestHeader
 import nl.q42.server.ErrorResponse
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
 
-@Slf4j(topic = "App Initiation Delegate")
 @Component
 class AppVersionMiddleware : HandlerInterceptor {
+    @Suppress("DefaultLocale")
     override fun preHandle(
         request: HttpServletRequest,
         response: HttpServletResponse,
         handler: Any
     ): Boolean {
-        val rawVersion = request.getHeader(MiddlewareConfiguration.Companion.HEADER_APP_VERSION)
+        val rawVersion = request.getHeader(RequestHeader.HEADER_APP_VERSION)
 
         if (rawVersion == null) return false
 
         try {
             val version = rawVersion.toInt()
 
-            if (version < SDUIApplication.Companion.MINIMUM_APP_VERSION || version > SDUIApplication.Companion.MAXIMUM_APP_VERSION) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST)
-                response.getWriter().write(
+            if (version < MINIMUM_APP_VERSION || version > MAXIMUM_APP_VERSION) {
+                response.status = HttpServletResponse.SC_BAD_REQUEST
+                response.writer.write(
                     Gson().toJson(
                         ErrorResponse(
                             String.format(
                                 "Invalid app version provided. Please provide a " +
                                         "version between %d and %d",
-                                SDUIApplication.Companion.MINIMUM_APP_VERSION,
-                                SDUIApplication.Companion.MAXIMUM_APP_VERSION
+                                MINIMUM_APP_VERSION,
+                                MAXIMUM_APP_VERSION
                             )
                         )
                     )
@@ -42,13 +42,20 @@ class AppVersionMiddleware : HandlerInterceptor {
                 return false
             }
 
-            request.setAttribute(MiddlewareConfiguration.Companion.ATTRIB_APP_VERSION, version)
+            request.setAttribute(RequestHeader.ATTRIB_APP_VERSION, version)
         } catch (e: Exception) {
-            AppVersionMiddleware.log.warn("Invalid app version: {}", rawVersion)
+            log.warn("Invalid app version: {}", rawVersion)
 
             return false
         }
 
         return true
+    }
+
+    companion object {
+        private val log = LoggerFactory.getLogger(AppVersionMiddleware::class.java)
+
+        const val MINIMUM_APP_VERSION: Int = 1
+        const val MAXIMUM_APP_VERSION: Int = 1
     }
 }

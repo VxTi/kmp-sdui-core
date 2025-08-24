@@ -5,17 +5,19 @@ plugins {
 
     id("com.android.application") apply false
     kotlin("multiplatform") apply false
-    kotlin("jvm")
 
     kotlin("plugin.lombok") version "2.2.10"
     id("io.freefair.lombok") version "8.14.2"
 
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 group = "nl.q42"
 version = "1.0"
 
 dependencies {
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(platform(libs.bom))
     implementation(libs.dynamodb.enhanced)
@@ -23,12 +25,15 @@ dependencies {
     implementation(libs.spring.boot.starter.web)
     implementation(libs.jakarta.persistence.api)
 
+    implementation(libs.kotlin.reflect)
+    implementation(libs.kotlin.stdlib.jdk8)
+
+    implementation(libs.commons.compress)
+
     implementation(libs.jackson.databind)
     implementation(libs.gson)
     implementation(libs.commons.dbcp2)
     implementation(libs.jbcrypt)
-
-    implementation(libs.kotlinx.serialization.json)
 
     implementation(kotlin("stdlib-jdk8"))
 
@@ -44,6 +49,16 @@ dependencies {
         }
     }
 }
+
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    enabled = false
+}
+
+tasks.named<Jar>("jar") {
+    enabled = true
+}
+
+
 
 kotlin {
     jvmToolchain(23)

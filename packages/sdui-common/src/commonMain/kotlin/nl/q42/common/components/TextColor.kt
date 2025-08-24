@@ -11,7 +11,7 @@ enum class TextColor {
     CUSTOM;
 
     override fun toString(): String {
-        return String.format("%d", this.ordinal)
+        return this.ordinal.toString()
     }
 
     companion object {

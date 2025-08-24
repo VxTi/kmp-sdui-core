@@ -1,6 +1,7 @@
 [versions]
 
 bom = "2.32.29"
+commonsCompress = "1.28.0"
 commonsDbcp2 = "2.13.0"
 gson = "2.13.1"
 jacksonAnnotations = "2.19.2"
@@ -17,6 +18,12 @@ kotlinInject = "0.8.0"
 kotlinxSerializationJson = "1.9.0"
 ksp = "2.2.20-RC-2.0.2"
 coil = "3.3.0"
+ktorClientAndroid = "3.2.3"
+ktorClientCio = "3.2.3"
+ktorClientContentNegotiation = "3.2.3"
+ktorClientCore = "3.2.3"
+ktorClientDarwin = "3.2.3"
+ktorSerializationKotlinxJson = "3.2.3"
 lombok = "1.18.38"
 multiplatformSettings = "1.3.0"
 springBoot = "3.5.5"
@@ -29,6 +36,7 @@ androidx-uitest-testManifest = { module = "androidx.compose.ui:ui-test-manifest"
 androidx-uitest-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-uiTest" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 bom = { module = "software.amazon.awssdk:bom", version.ref = "bom" }
+commons-compress = { module = "org.apache.commons:commons-compress", version.ref = "commonsCompress" }
 commons-dbcp2 = { module = "org.apache.commons:commons-dbcp2", version.ref = "commonsDbcp2" }
 dynamodb-enhanced = { module = "software.amazon.awssdk:dynamodb-enhanced" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -36,11 +44,19 @@ jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
 jakarta-persistence-api = { module = "jakarta.persistence:jakarta.persistence-api", version.ref = "jakartaPersistenceApi" }
 jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
 kotlinInject = { module = "me.tatarka.inject:kotlin-inject-runtime-kmp", version.ref = "kotlinInject" }
 kotlinInjectKsp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlinInject" }
 coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientCio" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorClientContentNegotiation" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCore" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktorClientDarwin" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }

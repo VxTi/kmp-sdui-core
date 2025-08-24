@@ -1,4 +1,4 @@
-package nl.q42.core
+package nl.q42.common.core
 
 enum class Locale
     (val value: String) {
@@ -7,7 +7,7 @@ enum class Locale
     EN_UK("en-UK");
 
     companion object {
-        fun from(value: String?, defaultLocale: Locale?): Locale? {
+        fun from(value: String?, defaultLocale: Locale = NL_NL): Locale {
             for (locale in entries) {
                 if (locale.value == value) return locale
             }

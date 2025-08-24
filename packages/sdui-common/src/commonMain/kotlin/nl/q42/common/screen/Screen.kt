@@ -2,20 +2,28 @@ package nl.q42.common.screen
 
 import nl.q42.common.components.Component
 import nl.q42.common.components.ComponentTypes
-import java.io.Serializable
-import java.util.List
+import kotlinx.serialization.Serializable
 
-abstract class Screen(val name: String?, val content: MutableList<Component?>) : Serializable {
+@Serializable
+abstract class Screen {
     val type: String = ComponentTypes.SCREEN
 
-    constructor(screenName: String?, vararg content: Component) : this(
-        screenName,
-        List.of<Component?>(*content)
+    val name: String;
+    val content: MutableList<Component>;
+
+    constructor(name: String, content: MutableList<Component>) {
+        this.name = name
+        this.content = content
+    }
+
+    constructor(name: String, vararg content: Component) : this(
+        name,
+        content.toMutableList()
     )
 
-    fun getComponentById(contentId: String?): Component? {
+    fun getComponentById(contentId: String): Component? {
         for (component in content) {
-            if (component?.contentId == contentId) {
+            if (component.contentId == contentId) {
                 return component
             }
         }

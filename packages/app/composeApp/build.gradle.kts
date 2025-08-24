@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
@@ -31,7 +32,7 @@ kotlin {
         compileSdk = 36
 
         defaultConfig {
-            minSdk = 21
+            minSdk = 24
             targetSdk = 35
 
             applicationId = "nl.q42.androidApp"
@@ -55,6 +56,13 @@ kotlin {
             implementation(libs.coil)
             implementation(libs.coil.network.ktor)
             implementation(libs.multiplatformSettings)
+
+            implementation(project(":sdui-common"))
+
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
 
         commonTest.dependencies {
@@ -66,6 +74,13 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
+
+            implementation(libs.ktor.client.android)
+
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
 
     }
@@ -84,14 +99,5 @@ dependencies {
         add("kspIosX64", this)
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
-    }
-
-    implementation(project(":sdui-common")) {
-        attributes {
-            attribute(
-                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.attribute,
-                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.jvm
-            )
-        }
     }
 }

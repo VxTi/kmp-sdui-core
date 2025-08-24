@@ -12,11 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.ktor.client.*
 import io.ktor.client.call.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import nl.q42.common.ScreenResponse
+import nl.q42.common.components.ComponentTypes
 import nl.q42.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import nl.q42.common.screen.Screen;
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.serialization.json.Json
+import nl.q42.common.RequestHeader
+import nl.q42.common.components.TextComponent
+import nl.q42.common.components.TextFormatting
+import nl.q42.common.core.AppIdentity
+import nl.q42.common.core.Locale
+
 
 private val httpClient = HttpClient {
     install(ContentNegotiation) {
@@ -27,9 +36,14 @@ private val httpClient = HttpClient {
     }
 }
 
-suspend fun fetchScreen(url: String): Screen? {
+suspend fun fetchScreen(id: String): ScreenResponse? {
     return try {
-        httpClient.get(url).body<Screen>()
+        httpClient.get("http://10.0.2.2:8080/screen") {
+          parameter("id", id)
+            header(RequestHeader.HEADER_APP_LOCALE, Locale.NL_NL.value)
+            header(RequestHeader.HEADER_APP_VERSION, 1)
+            header(RequestHeader.HEADER_APP_IDENTITY, AppIdentity.calculateAppIdentity(Locale.NL_NL, 1))
+        }.body<ScreenResponse>()
     } catch (e: Exception) {
         // Handle exceptions (e.g., network error, parsing error)
         println("Error fetching screen: ${e.message}")
@@ -38,22 +52,30 @@ suspend fun fetchScreen(url: String): Screen? {
 }
 
 @Composable
-internal fun DynamicScreen(screenResponse: Screen?) {
+internal fun DynamicScreen(screenResponse: ScreenResponse?) {
     if (screenResponse == null) {
         Text("Error loading screen or no data.")
         return
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        screenResponse.screen.forEach { element ->
+        screenResponse.screen.content.forEach { element ->
             when (element.type) {
-                "text" -> {
-                    element.content?.let {
-                        Text(
-                            text = it,
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(bottom = 8.dp)
-                        )
+                ComponentTypes.TEXT -> {
+                    element.let {
+                        val textComponent = it as TextComponent
+                        textComponent.text?.let { text ->
+                            Text(
+                                text = text,
+                                style = when (textComponent.formatting) {
+                                    TextFormatting.BOLD -> MaterialTheme.typography.titleLarge
+                                    TextFormatting.ITALIC -> MaterialTheme.typography.titleMedium
+                                    TextFormatting.UNDERLINE -> MaterialTheme.typography.titleSmall
+                                    TextFormatting.NORMAL -> MaterialTheme.typography.titleLarge
+                                },
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+                        }
                     }
                 }
                 // TODO: Add cases for other element types
@@ -68,7 +90,7 @@ internal fun DynamicScreen(screenResponse: Screen?) {
 @Preview
 @Composable
 internal fun App() = AppTheme {
-    var screenResponse by remember { mutableStateOf<Screen?>(null) }
+    var screenResponse by remember { mutableStateOf<ScreenResponse?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 
@@ -78,11 +100,12 @@ internal fun App() = AppTheme {
             // Ensure your local server is running and accessible from the emulator/device
             // For Android emulator, localhost is 10.0.2.2
             // For iOS simulator or physical devices, use your machine's local IP address
-            screenResponse = fetchScreen("http://10.0.2.2:8080/screen?id=home")
+            screenResponse = fetchScreen("home")
         } catch (e: Exception) {
             error = "Failed to load screen: ${e.message}"
             println(error)
         } finally {
+            println("Received screen: $screenResponse")
             isLoading = false
         }
     }
