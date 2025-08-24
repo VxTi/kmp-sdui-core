@@ -26,6 +26,22 @@ kotlin {
         }
     }
 
+    android {
+        namespace = "nl.q42"
+        compileSdk = 36
+
+        defaultConfig {
+            minSdk = 21
+            targetSdk = 35
+
+            applicationId = "nl.q42.androidApp"
+            versionCode = 1
+            versionName = "1.0.0"
+
+            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        }
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -55,34 +71,27 @@ kotlin {
     }
 }
 
-android {
-    namespace = "nl.q42"
-    compileSdk = 35
-
-    defaultConfig {
-        minSdk = 21
-        targetSdk = 35
-
-        applicationId = "nl.q42.androidApp"
-        versionCode = 1
-        versionName = "1.0.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-}
-
 //https://developer.android.com/develop/ui/compose/testing#setup
 dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
+
 }
 
 dependencies {
-    implementation(project(":packages:sdui-common"))
     with(libs.kotlinInjectKsp) {
         add("kspAndroid", this)
         add("kspIosX64", this)
         add("kspIosArm64", this)
         add("kspIosSimulatorArm64", this)
+    }
+
+    implementation(project(":sdui-common")) {
+        attributes {
+            attribute(
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.attribute,
+                org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType.jvm
+            )
+        }
     }
 }

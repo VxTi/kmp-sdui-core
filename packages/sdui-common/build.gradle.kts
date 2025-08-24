@@ -1,43 +1,43 @@
 plugins {
-    alias(libs.plugins.multiplatform)
-    alias(libs.plugins.android.application)
+    kotlin("multiplatform")
+    kotlin("jvm") apply false
+    id("com.android.library")
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    api(libs.jackson.annotations)
+    implementation(libs.lombok)
 }
 
 group = "nl.q42"
 version = "1.0"
 
+kotlin {
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+    jvm()
+    androidTarget {}
+}
 
 android {
-    namespace = "nl.q42"
-    compileSdk = 36
+    namespace = "nl.q42.sdui.common"
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
-        //noinspection OldTargetApi
-        targetSdk = 35
-        applicationId = "nl.q42.androidApp"
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-}
 
-
-kotlin {
-    androidTarget()
-    jvm()
-
-
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                // Dependencies common to all targets
-                // If jackson-annotations are used in common code, declare them here
-                // as an api or implementation dependency.
-                // Use "api" if the annotations are part of the public API of your library.
-                api(libs.jackson.annotations)
-            }
+        testOptions {
+            targetSdk = 34
+        }
+        lint {
+            targetSdk = 34
         }
     }
 
-    jvmToolchain(23)
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }

@@ -17,6 +17,7 @@ import io.ktor.client.request.*
 import nl.q42.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import nl.q42.common.screen.Screen;
+
 private val httpClient = HttpClient {
     install(ContentNegotiation) {
         json(Json {
@@ -28,7 +29,7 @@ private val httpClient = HttpClient {
 
 suspend fun fetchScreen(url: String): Screen? {
     return try {
-        httpClient.get(url).body<ScreenResponse>()
+        httpClient.get(url).body<Screen>()
     } catch (e: Exception) {
         // Handle exceptions (e.g., network error, parsing error)
         println("Error fetching screen: ${e.message}")
@@ -37,7 +38,7 @@ suspend fun fetchScreen(url: String): Screen? {
 }
 
 @Composable
-internal fun DynamicScreen(screenResponse: ScreenResponse?) {
+internal fun DynamicScreen(screenResponse: Screen?) {
     if (screenResponse == null) {
         Text("Error loading screen or no data.")
         return
@@ -67,7 +68,7 @@ internal fun DynamicScreen(screenResponse: ScreenResponse?) {
 @Preview
 @Composable
 internal fun App() = AppTheme {
-    var screenResponse by remember { mutableStateOf<ScreenResponse?>(null) }
+    var screenResponse by remember { mutableStateOf<Screen?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
 

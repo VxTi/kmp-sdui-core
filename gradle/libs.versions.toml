@@ -11,14 +11,16 @@ kotlin = "2.2.20-RC"
 compose = "1.9.0-beta03"
 agp = "8.13.0-rc01"
 androidx-activityCompose = "1.10.1"
-androidx-uiTest = "1.8.1"
+androidx-uiTest = "1.9.0"
 androidx-navigation = "2.9.0-beta05"
 kotlinInject = "0.8.0"
+kotlinxSerializationJson = "1.9.0"
 ksp = "2.2.20-RC-2.0.2"
 coil = "3.3.0"
 lombok = "1.18.38"
 multiplatformSettings = "1.3.0"
 springBoot = "3.5.5"
+annotationJvm = "1.9.1"
 
 [libraries]
 
@@ -38,9 +40,11 @@ kotlinInject = { module = "me.tatarka.inject:kotlin-inject-runtime-kmp", version
 kotlinInjectKsp = { module = "me.tatarka.inject:kotlin-inject-compiler-ksp", version.ref = "kotlinInject" }
 coil = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil" }
 coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 multiplatformSettings = { module = "com.russhwolf:multiplatform-settings-no-arg", version.ref = "multiplatformSettings" }
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "springBoot" }
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
 
 [plugins]
 
@@ -48,4 +52,5 @@ multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotl
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
