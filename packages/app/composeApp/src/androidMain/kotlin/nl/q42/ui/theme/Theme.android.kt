@@ -1,4 +1,4 @@
-package nl.q42.theme
+package nl.q42.ui.theme
 
 import android.app.Activity
 import androidx.compose.runtime.Composable

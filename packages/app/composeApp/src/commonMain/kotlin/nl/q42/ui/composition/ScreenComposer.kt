@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import nl.q42.common.ScreenResponse
 import nl.q42.common.components.*
+import nl.q42.ui.components.ButtonDrawable
 import nl.q42.ui.components.SearchBarDrawable
 import nl.q42.ui.components.SpacerDrawable
 import nl.q42.ui.components.TextComponentDrawable
@@ -24,6 +25,7 @@ internal fun DynamicScreen(screenResponse: ScreenResponse?) {
                 ComponentTypes.TEXT -> TextComponentDrawable(element as TextComponent)
                 ComponentTypes.SPACER -> SpacerDrawable(element as SpacerComponent)
                 ComponentTypes.SEARCH_BAR -> SearchBarDrawable(element as SearchBar)
+                ComponentTypes.BUTTON -> ButtonDrawable(element as ButtonComponent)
             }
         }
     }

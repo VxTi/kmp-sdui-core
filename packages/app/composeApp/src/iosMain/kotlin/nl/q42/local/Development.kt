@@ -1,5 +1,5 @@
 package nl.q42.local
 
 actual fun getLocalDevelopmentUri(): String {
-    return "http://localhost:8080"
+    return "http://Lucas-Macbook-Pro.local:8080"
 }
