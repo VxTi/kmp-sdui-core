@@ -1,4 +1,4 @@
-package nl.q42.components
+package nl.q42.ui.components
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth

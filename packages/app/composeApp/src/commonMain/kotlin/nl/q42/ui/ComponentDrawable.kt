@@ -1,4 +1,4 @@
-package nl.q42.components
+package nl.q42.ui
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable

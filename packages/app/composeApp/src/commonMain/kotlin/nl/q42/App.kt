@@ -10,10 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import nl.q42.common.ScreenResponse
-import nl.q42.theme.AppTheme
+import nl.q42.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import nl.q42.core.DynamicScreen
-import nl.q42.core.fetchScreen
+import nl.q42.ui.composition.DynamicScreen
+import nl.q42.ui.composition.fetchScreen
 
 @Preview
 @Composable

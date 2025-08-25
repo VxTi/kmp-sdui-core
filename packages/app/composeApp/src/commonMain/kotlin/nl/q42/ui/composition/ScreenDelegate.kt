@@ -1,4 +1,4 @@
-package nl.q42.core
+package nl.q42.ui.composition
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
