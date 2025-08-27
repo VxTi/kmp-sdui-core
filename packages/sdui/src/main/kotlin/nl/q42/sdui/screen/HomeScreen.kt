@@ -2,7 +2,7 @@ package nl.q42.sdui.screen
 
 import nl.q42.common.ButtonComponent
 import nl.q42.common.ButtonVariant
-import nl.q42.common.NavigationAction
+import nl.q42.common.NavigationEvent
 import nl.q42.common.SearchBarComponent
 import nl.q42.common.SpacerComponent
 import nl.q42.common.TextComponent
@@ -23,7 +23,7 @@ class HomeScreen : ScreenInstance {
             ButtonComponent(
                 "Hello world from SDUI",
                 ButtonVariant.NORMAL,
-                listOf(NavigationAction("/screen?id=home")),
+                listOf(NavigationEvent("/screen?id=home")),
                 "test"
             ),
         )

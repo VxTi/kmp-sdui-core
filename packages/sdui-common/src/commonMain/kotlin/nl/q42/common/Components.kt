@@ -10,29 +10,27 @@ import kotlinx.serialization.modules.polymorphic
 /** * * * * * * * * * * * * * * * * * * * * * * * * * /
  * Primary definitions used by all components         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-
 @Serializable
-sealed class TypedEntity {
-    abstract val entityType: String
+@OptIn(ExperimentalSerializationApi::class)
+@JsonClassDiscriminator("objectType")
+sealed class TypedObject {
+    abstract val objectType: String;
 }
 
 @Serializable
-@OptIn(ExperimentalSerializationApi::class)
-@JsonClassDiscriminator("entityType")
 sealed class Component(
-    override val entityType: String
-) : TypedEntity() {
+    override val objectType: String
+) : TypedObject() {
     abstract val contentId: String
 }
 
-@Serializable
-@OptIn(ExperimentalSerializationApi::class)
-@JsonClassDiscriminator("entityType")
-sealed class Action(
-    override val entityType: String
-) : TypedEntity()
 
-object ComponentTypes {
+@Serializable
+sealed class Event(
+    override val objectType: String
+) : TypedObject()
+
+object ComponentType {
     const val TEXT: String = "TEXT_COMPONENT"
     const val IMAGE: String = "IMAGE_COMPONENT"
     const val SPACER: String = "SPACER_COMPONENT"
@@ -40,42 +38,36 @@ object ComponentTypes {
     const val BUTTON: String = "BUTTON_COMPONENT"
 }
 
-object ActionTypes {
+object ActionType {
     const val NAVIGATION: String = "navigate"
-}
-
-interface Actionable {
-
 }
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * /
  *               Action definitions                   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 @Serializable
-@SerialName(ActionTypes.NAVIGATION)
-data class NavigationAction(val path: String) :
-    Action(ActionTypes.NAVIGATION)
+@SerialName(ActionType.NAVIGATION)
+data class NavigationEvent(val path: String) : Event(ActionType.NAVIGATION)
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * /
  *              Component definitions                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 @VersionDependable(until = 2)
 @Serializable
-@SerialName(ComponentTypes.SPACER)
+@SerialName(ComponentType.SPACER)
 data class SpacerComponent(
     val size: Int,
     override val contentId: String
-) :
-    Component(ComponentTypes.SPACER)
+) : Component(ComponentType.SPACER)
 
 @Serializable
-@SerialName(ComponentTypes.BUTTON)
+@SerialName(ComponentType.BUTTON)
 data class ButtonComponent(
     val text: String,
     val variant: ButtonVariant,
-    val actions: List<Action>,
+    val interactionEvents: List<Event>,
     override val contentId: String
-) : Component(ComponentTypes.BUTTON)
+) : Component(ComponentType.BUTTON)
 
 enum class ButtonVariant {
     NORMAL,
@@ -84,14 +76,14 @@ enum class ButtonVariant {
 }
 
 @Serializable
-@SerialName(ComponentTypes.TEXT)
+@SerialName(ComponentType.TEXT)
 data class TextComponent(
     val text: String,
     val color: TextColor,
     var size: TextSize,
     val formatting: TextFormatting,
     override val contentId: String
-) : Component(ComponentTypes.TEXT) {
+) : Component(ComponentType.TEXT) {
     constructor(
         text: String,
         contentId: String,
@@ -128,9 +120,20 @@ enum class TextSize {
 }
 
 @Serializable
-@SerialName(ComponentTypes.SEARCH_BAR)
-data class SearchBarComponent(val placeholder: String, override val contentId: String) :
-    Component(ComponentTypes.SEARCH_BAR)
+@SerialName(ComponentType.SEARCH_BAR)
+data class SearchBarComponent(
+    val placeholder: String?,
+    override val contentId: String
+) : Component(ComponentType.SEARCH_BAR)
+
+@Serializable
+@SerialName(ComponentType.IMAGE)
+data class ImageComponent(
+    val url: String,
+    val alt: String?,
+    val interactionEvents: List<Event>,
+    override val contentId: String,
+) : Component(ComponentType.IMAGE)
 
 val SDUIPolymorphicSerializer = SerializersModule {
     polymorphic(Component::class) {
@@ -139,7 +142,7 @@ val SDUIPolymorphicSerializer = SerializersModule {
         subclass(TextComponent::class, TextComponent.serializer())
         subclass(SearchBarComponent::class, SearchBarComponent.serializer())
     }
-    polymorphic(Action::class) {
-        subclass(NavigationAction::class, NavigationAction.serializer())
+    polymorphic(Event::class) {
+        subclass(NavigationEvent::class, NavigationEvent.serializer())
     }
 }

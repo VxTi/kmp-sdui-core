@@ -19,6 +19,7 @@ import nl.q42.core.AppInstance
 import nl.q42.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import nl.q42.ui.composition.DynamicScreen
+import nl.q42.ui.composition.ServerDrivenScreen
 import nl.q42.ui.composition.fetchScreen
 
 
@@ -75,9 +76,9 @@ internal fun App() = AppTheme {
         } else if (error != null) {
             Text("Error: $error")
         } else if (screenResponse != null) {
-            DynamicScreen(screenResponse!!)
+            ServerDrivenScreen(screenResponse!!)
         } else {
-            Spacer( modifier = Modifier.padding(vertical = 10.dp))
+            Spacer( modifier = Modifier.padding(vertical = 20.dp))
             Text("No screen data available.")
         }
     }

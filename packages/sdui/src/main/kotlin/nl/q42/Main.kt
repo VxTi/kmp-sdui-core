@@ -1,13 +1,11 @@
 package nl.q42
 
-import lombok.extern.slf4j.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.ComponentScan
 import java.io.IOException
 import java.util.Collections
 
-@Slf4j
 @SpringBootApplication
 @ComponentScan("nl.q42")
 object Main {

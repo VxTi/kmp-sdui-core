@@ -1,6 +1,5 @@
 package nl.q42.server.routes
 
-import lombok.extern.slf4j.Slf4j
 import nl.q42.common.RequestHeader
 import nl.q42.common.ScreenResponse
 import nl.q42.common.screen.Screen
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@Slf4j(topic = "Application Initiation Route")
 class ScreenRoute(private val registry: ScreenRegistry) {
-
     private val log = LoggerFactory.getLogger(ScreenRoute::class.java)
 
     @GetMapping(path = [ROUTE], produces = [MediaType.APPLICATION_JSON_VALUE])

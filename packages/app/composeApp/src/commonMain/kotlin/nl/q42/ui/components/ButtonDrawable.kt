@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import nl.q42.appInstance
 import nl.q42.common.ButtonComponent
 
 @Composable
@@ -22,7 +23,7 @@ internal fun ButtonDrawable(component: ButtonComponent) {
     val backgroundColor = if (isPressed) Color.DarkGray else Color.Black
 
     Button(
-        onClick = { /*appInstance.invokeActions(component.actions);*/ },
+        onClick = { appInstance.emitEvents(component.interactionEvents); },
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
