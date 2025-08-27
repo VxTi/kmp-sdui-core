@@ -26,10 +26,22 @@ private val httpClient = HttpClient {
 
 private val SERVER_BASE_URI = getLocalDevelopmentUri();
 
-suspend fun fetchScreen(id: String, appInstance: AppInstance): ScreenResponse? {
+
+suspend fun synchronizeApplication(appInstance: AppInstance) {
+    try {
+        httpClient.get("$SERVER_BASE_URI") {
+            header(RequestHeader.HEADER_APP_LOCALE, appInstance.locale.value)
+            header(RequestHeader.HEADER_APP_VERSION, appInstance.version)
+            header(RequestHeader.HEADER_APP_IDENTITY, appInstance.identity)
+        }.body<String>()
+    } catch (exception: Exception) {
+        println("An error occurred whilst attempting to synchronize application: ${exception.message}")
+    }
+}
+
+suspend fun fetchScreen(appInstance: AppInstance): ScreenResponse? {
     return try {
-        httpClient.get("$SERVER_BASE_URI/screen") {
-            parameter("id", id)
+        httpClient.get(SERVER_BASE_URI) {
             header(RequestHeader.HEADER_APP_LOCALE, appInstance.locale.value)
             header(RequestHeader.HEADER_APP_VERSION, appInstance.version)
             header(RequestHeader.HEADER_APP_IDENTITY, appInstance.identity)

@@ -2,6 +2,7 @@ package nl.q42.sdui.screen
 
 import nl.q42.common.ButtonComponent
 import nl.q42.common.ButtonVariant
+import nl.q42.common.ImageComponent
 import nl.q42.common.NavigationEvent
 import nl.q42.common.SearchBarComponent
 import nl.q42.common.SpacerComponent
@@ -26,14 +27,19 @@ class HomeScreen : ScreenInstance {
                 listOf(NavigationEvent("/screen?id=home")),
                 "test"
             ),
+            ImageComponent(
+                url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMCmWeNm9_PMjP0-FDjhC-WFnm8xL7CzcmAg&s",
+                alt ="test",
+                contentId = "image"
+            ),
         )
     }
 
     override fun name(): String {
-        return SCREEN_NAME
+        return SCREEN_IDENTIFIER
     }
 
     companion object {
-        const val SCREEN_NAME: String = "home"
+        const val SCREEN_IDENTIFIER: String = "home"
     }
 }

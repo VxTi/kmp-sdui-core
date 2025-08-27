@@ -131,7 +131,7 @@ data class SearchBarComponent(
 data class ImageComponent(
     val url: String,
     val alt: String?,
-    val interactionEvents: List<Event>,
+    val interactionEvents: List<Event>? = null,
     override val contentId: String,
 ) : Component(ComponentType.IMAGE)
 
@@ -141,6 +141,7 @@ val SDUIPolymorphicSerializer = SerializersModule {
         subclass(ButtonComponent::class, ButtonComponent.serializer())
         subclass(TextComponent::class, TextComponent.serializer())
         subclass(SearchBarComponent::class, SearchBarComponent.serializer())
+        subclass(ImageComponent::class, ImageComponent.serializer())
     }
     polymorphic(Event::class) {
         subclass(NavigationEvent::class, NavigationEvent.serializer())

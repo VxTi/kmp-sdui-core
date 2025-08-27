@@ -9,14 +9,14 @@ import nl.q42.core.RequestContext
 class ProfileScreen : ScreenInstance {
 
     override fun create(context: RequestContext): Screen {
-        return Screen(SCREEN_NAME)
+        return Screen(SCREEN_IDENTIFIER)
     }
 
     override fun name(): String {
-        return SCREEN_NAME
+        return SCREEN_IDENTIFIER
     }
 
     companion object {
-        const val SCREEN_NAME: String = "profile"
+        const val SCREEN_IDENTIFIER: String = "profile"
     }
 }

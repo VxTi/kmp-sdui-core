@@ -13,10 +13,10 @@ class SearchScreen : ScreenInstance {
     }
 
     override fun name(): String {
-        return SCREEN_NAME
+        return SCREEN_IDENTIFIER
     }
 
     companion object {
-        const val SCREEN_NAME: String = "search"
+        const val SCREEN_IDENTIFIER: String = "search"
     }
 }

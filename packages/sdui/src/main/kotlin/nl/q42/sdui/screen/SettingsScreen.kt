@@ -11,10 +11,10 @@ class SettingsScreen : ScreenInstance {
     }
 
     override fun name(): String {
-        return SCREEN_NAME
+        return SCREEN_IDENTIFIER
     }
 
     companion object {
-        const val SCREEN_NAME: String = "settings"
+        const val SCREEN_IDENTIFIER: String = "settings"
     }
 }

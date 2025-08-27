@@ -21,7 +21,7 @@ class ScreenRegistry(private val screens: MutableList<ScreenInstance>) {
     }
 
     fun defaultScreen(context: RequestContext): Screen {
-        val initial = getByIdentifier(DEFAULT_SCREEN, context)
+        val initial = getByIdentifier(DEFAULT_SCREEN_IDENTIFIER, context)
 
         return when {
             initial != null -> initial
@@ -33,12 +33,12 @@ class ScreenRegistry(private val screens: MutableList<ScreenInstance>) {
 
     companion object {
         val SCREEN_TABS: List<ScreenTab> = listOf<ScreenTab>(
-            ScreenTab("tab.home", "home.png", HomeScreen.SCREEN_NAME),
-            ScreenTab("tab.search", "search.png", SearchScreen.SCREEN_NAME),
-            ScreenTab("tab.profile", "profile.png", ProfileScreen.SCREEN_NAME),
-            ScreenTab("tab.settings", "settings.png", SettingsScreen.SCREEN_NAME)
+            ScreenTab("Home", "home.png", HomeScreen.SCREEN_IDENTIFIER),
+            ScreenTab("Search", "search.png", SearchScreen.SCREEN_IDENTIFIER),
+            ScreenTab("Profile", "profile.png", ProfileScreen.SCREEN_IDENTIFIER),
+            ScreenTab("Settings", "settings.png", SettingsScreen.SCREEN_IDENTIFIER)
         )
 
-        const val DEFAULT_SCREEN = HomeScreen.SCREEN_NAME;
+        const val DEFAULT_SCREEN_IDENTIFIER = HomeScreen.SCREEN_IDENTIFIER;
     }
 }
