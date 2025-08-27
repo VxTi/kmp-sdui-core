@@ -9,9 +9,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import nl.q42.common.components.TextComponent
-import nl.q42.common.components.TextFormatting
-import nl.q42.common.components.TextSize
+import nl.q42.common.TextComponent
+import nl.q42.common.TextFormatting
+import nl.q42.common.TextSize
 
 @Composable
 fun TextComponentDrawable(component: TextComponent) {

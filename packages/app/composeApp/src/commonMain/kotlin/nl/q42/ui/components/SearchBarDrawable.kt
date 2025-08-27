@@ -1,7 +1,6 @@
 package nl.q42.ui.components
 
 import androidx.compose.runtime.Composable
-import nl.q42.common.components.SearchBar
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -13,12 +12,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import nl.q42.common.SearchBarComponent
 import org.jetbrains.compose.resources.painterResource
 import sdui_cmp_poc.app.composeapp.generated.resources.Res
 import sdui_cmp_poc.app.composeapp.generated.resources.ic_search
 
 @Composable
-internal fun SearchBarDrawable(component: SearchBar) {
+internal fun SearchBarDrawable(component: SearchBarComponent) {
     var text by remember { mutableStateOf("") }
 
     TextField(

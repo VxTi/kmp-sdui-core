@@ -10,37 +10,32 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import nl.q42.common.RequestHeader
 import nl.q42.common.ScreenResponse
-import nl.q42.common.core.AppIdentity
-import nl.q42.common.core.Locale
+import nl.q42.common.SDUIPolymorphicSerializer
+import nl.q42.core.AppInstance
 import nl.q42.local.getLocalDevelopmentUri
-
 
 private val httpClient = HttpClient {
     install(ContentNegotiation) {
         json(Json {
             ignoreUnknownKeys = true
             isLenient = true
-            classDiscriminator = "type"
+            serializersModule = SDUIPolymorphicSerializer
         })
     }
 }
 
 private val SERVER_BASE_URI = getLocalDevelopmentUri();
 
-suspend fun fetchScreen(id: String): ScreenResponse? {
+suspend fun fetchScreen(id: String, appInstance: AppInstance): ScreenResponse? {
     return try {
         httpClient.get("$SERVER_BASE_URI/screen") {
             parameter("id", id)
-            header(RequestHeader.HEADER_APP_LOCALE, Locale.NL_NL.value)
-            header(RequestHeader.HEADER_APP_VERSION, 1)
-            header(
-                RequestHeader.HEADER_APP_IDENTITY,
-                AppIdentity.calculateAppIdentity(Locale.NL_NL, 1)
-            )
+            header(RequestHeader.HEADER_APP_LOCALE, appInstance.locale.value)
+            header(RequestHeader.HEADER_APP_VERSION, appInstance.version)
+            header(RequestHeader.HEADER_APP_IDENTITY, appInstance.identity)
         }.body<ScreenResponse>()
-    } catch (e: Exception) {
-        // Handle exceptions (e.g., network error, parsing error)
-        println("Error fetching screen: ${e.message}")
-        null
+    } catch (exception: Exception) {
+        println("An error occurred whilst attempting to deserialize response: ${exception.message}")
+        return null
     }
 }

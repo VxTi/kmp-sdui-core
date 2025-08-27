@@ -16,7 +16,7 @@ class ScreenRegistry(private val screens: MutableList<ScreenInstance>) {
         return this.screens.stream()
             .filter { screen: ScreenInstance? -> screen?.name().equals(screenIdentifier) }
             .findFirst()
-            .map({ screen: ScreenInstance -> screen.create(context) })
+            .map { screen: ScreenInstance -> screen.create(context) }
             .orElse(null)
     }
 
@@ -39,6 +39,6 @@ class ScreenRegistry(private val screens: MutableList<ScreenInstance>) {
             ScreenTab("tab.settings", "settings.png", SettingsScreen.SCREEN_NAME)
         )
 
-        val DEFAULT_SCREEN = HomeScreen.SCREEN_NAME;
+        const val DEFAULT_SCREEN = HomeScreen.SCREEN_NAME;
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.q42.common.components.SpacerComponent
+import nl.q42.common.SpacerComponent
 
 @Composable
 internal fun SpacerDrawable(component: SpacerComponent) {

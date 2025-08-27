@@ -3,12 +3,8 @@ package nl.q42.ui.composition
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import nl.q42.common.ScreenResponse
-import nl.q42.common.components.*
-import nl.q42.ui.components.ButtonDrawable
-import nl.q42.ui.components.SearchBarDrawable
-import nl.q42.ui.components.SpacerDrawable
-import nl.q42.ui.components.TextComponentDrawable
+import nl.q42.common.*
+import nl.q42.ui.components.*
 
 @Composable
 internal fun DynamicScreen(screenResponse: ScreenResponse?) {
@@ -21,11 +17,11 @@ internal fun DynamicScreen(screenResponse: ScreenResponse?) {
             items = screenResponse.screen.content,
             key = { it.contentId }
         ) { element ->
-            when (element.type) {
-                ComponentTypes.TEXT -> TextComponentDrawable(element as TextComponent)
-                ComponentTypes.SPACER -> SpacerDrawable(element as SpacerComponent)
-                ComponentTypes.SEARCH_BAR -> SearchBarDrawable(element as SearchBar)
-                ComponentTypes.BUTTON -> ButtonDrawable(element as ButtonComponent)
+            when (element) {
+                is TextComponent -> TextComponentDrawable(element)
+                is SpacerComponent -> SpacerDrawable(element)
+                is SearchBarComponent -> SearchBarDrawable(element)
+                is ButtonComponent -> ButtonDrawable(element)
             }
         }
     }

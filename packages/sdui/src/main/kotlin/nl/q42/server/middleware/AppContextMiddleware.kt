@@ -7,7 +7,6 @@ import nl.q42.common.RequestHeader
 import nl.q42.common.core.AppIdentity
 import nl.q42.common.core.Locale
 import nl.q42.core.RequestContext
-import nl.q42.server.routes.ApplicationInitiationRoute
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
@@ -29,9 +28,12 @@ class AppContextMiddleware : HandlerInterceptor {
 
         if (version == null || appIdentity == null) return false;
 
-        val computedIdentity = AppIdentity.calculateAppIdentity(locale, version);
+        val computedIdentity = AppIdentity.calculate(locale, version);
 
-        if (appIdentity != computedIdentity) return false;
+        if (appIdentity != computedIdentity) {
+            println("Identity mismatch: $appIdentity != $computedIdentity")
+            return false;
+        }
 
         val context = RequestContext(locale, version)
 

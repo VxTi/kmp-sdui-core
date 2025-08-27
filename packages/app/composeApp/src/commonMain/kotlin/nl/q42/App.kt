@@ -2,6 +2,7 @@ package nl.q42
 
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -14,17 +15,14 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import nl.q42.common.ScreenResponse
+import nl.q42.core.AppInstance
 import nl.q42.ui.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import nl.q42.ui.composition.DynamicScreen
 import nl.q42.ui.composition.fetchScreen
 
-suspend fun loadScreen(screenId: String): ScreenResponse? {
-    // Ensure your local server is running and accessible from the emulator/device
-    // For Android emulator, localhost is 10.0.2.2
-    // For iOS simulator or physical devices, use your machine's local IP address
-    return fetchScreen(screenId)
-}
+
+val appInstance: AppInstance = AppInstance()
 
 @Preview
 @Composable
@@ -35,11 +33,11 @@ internal fun App() = AppTheme {
     val coroutineScope = rememberCoroutineScope()
     var dragAmount by remember { mutableStateOf(0f) }
 
-    fun reloadScreen() {
+    fun reloadScreen(appInstance: AppInstance) {
         isLoading = true
         try {
             coroutineScope.launch {
-                screenResponse = loadScreen("home")
+                screenResponse = fetchScreen("home", appInstance)
                 isLoading = false
                 error = null
                 println("Received screen: $screenResponse")
@@ -52,7 +50,7 @@ internal fun App() = AppTheme {
     }
 
     LaunchedEffect(Unit) {
-        reloadScreen()
+        reloadScreen(appInstance)
     }
 
     Column(
@@ -63,7 +61,7 @@ internal fun App() = AppTheme {
                 detectDragGestures(
                     onDragEnd = {
                         if (dragAmount > 200) {
-                            reloadScreen()
+                            reloadScreen(appInstance)
                         }
                         dragAmount = 0f
                     },
@@ -79,6 +77,7 @@ internal fun App() = AppTheme {
         } else if (screenResponse != null) {
             DynamicScreen(screenResponse!!)
         } else {
+            Spacer( modifier = Modifier.padding(vertical = 10.dp))
             Text("No screen data available.")
         }
     }

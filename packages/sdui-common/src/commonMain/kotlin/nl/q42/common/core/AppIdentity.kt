@@ -2,7 +2,7 @@ package nl.q42.common.core
 
 class AppIdentity {
     companion object {
-        fun calculateAppIdentity(locale: Locale, version: Int): String {
+        fun calculate(locale: Locale, version: Int): String {
             val input = "${locale.value}_$version"
             return input.hashCode().toString(16).uppercase()
         }

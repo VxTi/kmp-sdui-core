@@ -15,6 +15,6 @@ class SettingsScreen : ScreenInstance {
     }
 
     companion object {
-        const val SCREEN_NAME: kotlin.String = "settings"
+        const val SCREEN_NAME: String = "settings"
     }
 }

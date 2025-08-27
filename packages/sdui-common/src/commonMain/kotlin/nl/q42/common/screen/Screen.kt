@@ -1,17 +1,15 @@
 package nl.q42.common.screen
 
-import nl.q42.common.components.Component
-import nl.q42.common.components.ComponentTypes
+import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
+import nl.q42.common.Component
 
 @Serializable
 class Screen {
-    val type: String = ComponentTypes.SCREEN
-
     val name: String;
-    val content: MutableList<Component>;
+    val content: MutableList<@Polymorphic Component>;
 
-    constructor(name: String, content: MutableList<Component>) {
+    constructor(name: String, content: MutableList<@Polymorphic Component>) {
         this.name = name
         this.content = content
     }
