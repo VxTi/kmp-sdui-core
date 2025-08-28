@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="SDUI" pattern="(file[sdui-common]:*src/commonMain//*&amp;&amp;!file:*intermediates*/&amp;&amp;!file:*generated*/&amp;&amp;!file:*build*/&amp;&amp;!lib:*..*||file[kmp-sdui-core.sdui-common*]:*//*||file[kmp-sdui-core.sdui*]:*//*||file[kmp-sdui-core.app*]:*//*)&amp;&amp;!file[kmp-sdui-core.app.composeApp]:*/&amp;&amp;!file[kmp-sdui-core.app.composeApp.iosSimulatorArm64Main]:*/&amp;&amp;!file[kmp-sdui-core.app.composeApp.iosArm64Main]:*/" />
+</component>

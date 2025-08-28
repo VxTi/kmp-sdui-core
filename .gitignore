@@ -1,7 +1,8 @@
 
 *.iml
 .gradle
-.idea
+.idea/*
+!.idea/scopes
 .kotlin
 .DS_Store
 build
