@@ -12,10 +12,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import kmp_sdui_core.app.composeapp.generated.resources.Res
+import kmp_sdui_core.app.composeapp.generated.resources.ic_search
 import nl.q42.common.SearchBarComponent
 import org.jetbrains.compose.resources.painterResource
-import sdui_cmp_poc.app.composeapp.generated.resources.Res
-import sdui_cmp_poc.app.composeapp.generated.resources.ic_search
 
 @Composable
 internal fun SearchBarDrawable(component: SearchBarComponent) {
@@ -35,7 +35,7 @@ internal fun SearchBarDrawable(component: SearchBarComponent) {
                 tint = Color.Black
             )
         },
-        shape = CircleShape, // <-- Rounded shape applied here
+        shape = CircleShape,
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,

@@ -1,4 +1,4 @@
-rootProject.name = "sdui-cmp-poc"
+rootProject.name = "kmp-sdui-core"
 
 include(":app")
 include(":sdui-common")
