@@ -8,9 +8,9 @@ plugins {
     kotlin("jvm")
 }
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib-jdk17"))
 }
 
 kotlin {
-    jvmToolchain(8)
+    jvmToolchain(17)
 }

@@ -14,10 +14,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nl.q42.ui.components.MenuBarDrawable
-import nl.q42.ui.theme.AppTheme
+import nl.q42.composable.NavigationBar
+import nl.q42.composable.ServerDrivenScreen
+import nl.q42.composable.theme.AppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import nl.q42.ui.composition.ServerDrivenScreen
 
 
 @Preview
@@ -35,7 +35,7 @@ internal fun App(viewController: ViewController) = AppTheme {
     }
 
     Scaffold(
-        bottomBar = { MenuBarDrawable(viewController) }
+        bottomBar = { NavigationBar(viewController) }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column(

@@ -1,4 +1,4 @@
-package nl.q42.ui.components
+package nl.q42.composable
 
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -10,7 +10,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import nl.q42.ViewController
 
 @Composable
-internal actual fun MenuBarDrawable(controller: ViewController) {
+internal actual fun NavigationBar(controller: ViewController) {
 
     val tabs by controller.tabs.collectAsState();
     val selectedTabIndex by controller.selectedTabIndex.collectAsState();

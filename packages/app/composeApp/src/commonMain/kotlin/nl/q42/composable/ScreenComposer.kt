@@ -1,11 +1,10 @@
-package nl.q42.ui.composition
+package nl.q42.composable
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import nl.q42.ViewController
 import nl.q42.common.*
 import nl.q42.common.screen.Screen
-import nl.q42.ui.components.*
 
 @Composable
 internal fun ServerDrivenScreen(screen: Screen?, controller: ViewController) {

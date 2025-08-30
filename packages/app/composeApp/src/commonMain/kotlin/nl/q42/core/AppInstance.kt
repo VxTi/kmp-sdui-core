@@ -1,5 +1,6 @@
 package nl.q42.core
 
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.input.key.Key.Companion.R
 import kmp_sdui_core.app.composeapp.generated.resources.Res
 import kmp_sdui_core.app.composeapp.generated.resources.app_locale

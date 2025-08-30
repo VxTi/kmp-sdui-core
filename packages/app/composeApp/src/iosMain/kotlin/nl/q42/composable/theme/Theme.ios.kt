@@ -1,4 +1,4 @@
-package nl.q42.ui.theme
+package nl.q42.composable.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
