@@ -6,12 +6,14 @@ import nl.q42.common.Component
 
 @Serializable
 class Screen {
-    val name: String;
+    val identifier: String;
+    val hash: Int;
     val content: MutableList<@Polymorphic Component>;
 
     constructor(name: String, content: MutableList<@Polymorphic Component>) {
-        this.name = name
+        this.identifier = name
         this.content = content
+        this.hash = content.hashCode();
     }
 
     constructor(name: String, vararg content: Component) : this(

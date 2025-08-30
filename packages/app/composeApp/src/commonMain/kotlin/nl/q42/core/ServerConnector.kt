@@ -32,13 +32,18 @@ class ServerConnector(private val appInstance: AppInstance) {
         appInstance: AppInstance,
         path: String,
         params: List<Pair<String, String>> = listOf()
-    ): T where T : Any {
-        return httpClient.get("$serverBaseUrl$path") {
-            params.forEach { parameter(it.first, it.second) }
-            header(RequestHeader.HEADER_APP_LOCALE, appInstance.locale.value)
-            header(RequestHeader.HEADER_APP_VERSION, appInstance.version)
-            header(RequestHeader.HEADER_APP_IDENTITY, appInstance.identity)
-        }.body<T>()
+    ): T? where T : Any {
+        return try {
+            httpClient.get("$serverBaseUrl$path") {
+                params.forEach { parameter(it.first, it.second) }
+                header(RequestHeader.HEADER_APP_LOCALE, appInstance.locale.value)
+                header(RequestHeader.HEADER_APP_VERSION, appInstance.version)
+                header(RequestHeader.HEADER_APP_IDENTITY, appInstance.identity)
+            }.body<T>()
+        } catch (exception: Exception) {
+            println("An error occurred whilst attempting to deserialize response: ${exception.message}")
+            return null
+        }
     }
 
     suspend fun fetchScreen(screenId: String): ScreenResponse? {

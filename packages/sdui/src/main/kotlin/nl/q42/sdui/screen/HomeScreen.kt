@@ -4,6 +4,8 @@ import nl.q42.common.ButtonComponent
 import nl.q42.common.ButtonVariant
 import nl.q42.common.ImageComponent
 import nl.q42.common.NavigationEvent
+import nl.q42.common.ScrollDirection
+import nl.q42.common.ScrollableContainer
 import nl.q42.common.SearchBarComponent
 import nl.q42.common.SpacerComponent
 import nl.q42.common.TextComponent
@@ -17,20 +19,23 @@ class HomeScreen : ScreenInstance {
         return Screen(
             name(),
             SpacerComponent(1, "0"),
-            SearchBarComponent(placeholder = "Search...", contentId = "search-2"),
-            SpacerComponent(size = 2, contentId = "spacer-1"),
             TextComponent(text = "Hello world!", contentId = "text-1"),
-            SpacerComponent(size = 10, contentId = "spacer-2"),
-            ButtonComponent(
-                "Hello world from SDUI",
-                ButtonVariant.NORMAL,
-                listOf(NavigationEvent("/screen?id=home")),
-                "test"
-            ),
-            ImageComponent(
-                url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMCmWeNm9_PMjP0-FDjhC-WFnm8xL7CzcmAg&s",
-                alt ="test",
-                contentId = "image"
+            ScrollableContainer(
+                listOf(
+                    SearchBarComponent(placeholder = "Search...", contentId = "search-2"),
+                    SpacerComponent(size = 10, contentId = "spacer-2"),
+                    ButtonComponent(
+                        "Hello world from SDUI",
+                        ButtonVariant.NORMAL,
+                        listOf(NavigationEvent("/screen?id=home")),
+                        "test"
+                    ),
+                    ImageComponent(
+                        url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMCmWeNm9_PMjP0-FDjhC-WFnm8xL7CzcmAg&s",
+                        alt = "test",
+                        contentId = "image"
+                    ),
+                ), contentId = "test-container"
             ),
         )
     }

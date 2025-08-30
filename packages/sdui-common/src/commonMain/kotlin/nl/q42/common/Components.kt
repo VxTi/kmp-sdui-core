@@ -36,6 +36,8 @@ object ComponentType {
     const val SPACER: String = "SPACER_COMPONENT"
     const val SEARCH_BAR: String = "SEARCH_BAR_COMPONENT"
     const val BUTTON: String = "BUTTON_COMPONENT"
+
+    const val SCROLLABLE_CONTAINER: String = "SCROLLABLE_CONTAINER"
 }
 
 object ActionType {
@@ -135,15 +137,16 @@ data class ImageComponent(
     override val contentId: String,
 ) : Component(ComponentType.IMAGE)
 
-val SDUIPolymorphicSerializer = SerializersModule {
-    polymorphic(Component::class) {
-        subclass(SpacerComponent::class, SpacerComponent.serializer())
-        subclass(ButtonComponent::class, ButtonComponent.serializer())
-        subclass(TextComponent::class, TextComponent.serializer())
-        subclass(SearchBarComponent::class, SearchBarComponent.serializer())
-        subclass(ImageComponent::class, ImageComponent.serializer())
-    }
-    polymorphic(Event::class) {
-        subclass(NavigationEvent::class, NavigationEvent.serializer())
-    }
+@Serializable
+@SerialName(ComponentType.SCROLLABLE_CONTAINER)
+data class ScrollableContainer(
+    val content: List<Component>,
+    val direction: ScrollDirection = ScrollDirection.VERTICAL,
+    override val contentId: String
+): Component(ComponentType.SCROLLABLE_CONTAINER)
+
+enum class ScrollDirection {
+    HORIZONTAL,
+    VERTICAL,
+    BOTH
 }

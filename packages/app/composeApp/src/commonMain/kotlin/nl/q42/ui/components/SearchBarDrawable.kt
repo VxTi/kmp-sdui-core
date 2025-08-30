@@ -14,11 +14,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kmp_sdui_core.app.composeapp.generated.resources.Res
 import kmp_sdui_core.app.composeapp.generated.resources.ic_search
+import nl.q42.ViewController
 import nl.q42.common.SearchBarComponent
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-internal fun SearchBarDrawable(component: SearchBarComponent) {
+internal fun SearchBarDrawable(component: SearchBarComponent, controller: ViewController) {
     var text by remember { mutableStateOf("") }
 
     TextField(

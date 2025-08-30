@@ -9,12 +9,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import nl.q42.ViewController
 import nl.q42.common.TextComponent
 import nl.q42.common.TextFormatting
 import nl.q42.common.TextSize
 
 @Composable
-fun TextComponentDrawable(component: TextComponent) {
+internal fun TextComponentDrawable(component: TextComponent, controller: ViewController) {
     Text(
         text = component.text,
         style = getTextStyle(component),
