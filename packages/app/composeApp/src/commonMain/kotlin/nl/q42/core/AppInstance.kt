@@ -29,15 +29,11 @@ class AppInstance(val version: Int, val locale: Locale) {
     }
 
     companion object {
-        fun fromConfig(callback: (AppInstance) -> Unit) {
-            runBlocking {
-                callback(
-                    AppInstance(
-                        version = getString(Res.string.app_version).toIntOrNull() ?: 1,
-                        locale = Locale.from(getString(Res.string.app_locale)),
-                    )
-                );
-            }
+        fun fromConfig() = runBlocking {
+            AppInstance(
+                version = getString(Res.string.app_version).toIntOrNull() ?: 1,
+                locale = Locale.from(getString(Res.string.app_locale)),
+            )
         }
     }
 }

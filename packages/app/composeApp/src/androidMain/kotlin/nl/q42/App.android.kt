@@ -12,9 +12,6 @@ class AppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        AppInstance.fromConfig { instance ->
-            setContent { App(ViewController(instance)) }
-        };
-
+        setContent { App(ViewController(AppInstance.fromConfig())) }
     }
 }

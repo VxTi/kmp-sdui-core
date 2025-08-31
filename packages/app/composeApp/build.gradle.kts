@@ -11,10 +11,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget {
-        //https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
-    }
+    androidTarget()
 
     listOf(
         iosX64(),
@@ -38,8 +35,6 @@ kotlin {
             applicationId = "nl.q42.androidApp"
             versionCode = 1
             versionName = "1.0.0"
-
-            testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         }
     }
 
@@ -67,24 +62,20 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
         }
 
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-        }
-
         androidMain.dependencies {
             implementation(compose.uiTooling)
             implementation(libs.androidx.activityCompose)
 
             implementation(libs.ktor.client.android)
-
         }
 
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
 
+        iosMain {
+            kotlin.srcDirs("src/iosMain/kotlin")
+        }
     }
 }
 
@@ -92,7 +83,6 @@ kotlin {
 dependencies {
     androidTestImplementation(libs.androidx.uitest.junit4)
     debugImplementation(libs.androidx.uitest.testManifest)
-
 }
 
 dependencies {
