@@ -10,6 +10,7 @@ import nl.q42.common.ImageComponent
 
 @Composable
 internal fun ImageComponentDrawable(component: ImageComponent, controller: ViewController) {
+
     AsyncImage(
         model = component.url,
         contentDescription = component.alt,

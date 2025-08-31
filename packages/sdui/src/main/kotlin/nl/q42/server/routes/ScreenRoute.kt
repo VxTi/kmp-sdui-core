@@ -5,7 +5,7 @@ import nl.q42.common.ScreenResponse
 import nl.q42.common.core.QueryParameter
 import nl.q42.common.core.ServerRoute
 import nl.q42.common.screen.Screen
-import nl.q42.core.RequestContext
+import nl.q42.core.AppRequestContext
 import nl.q42.core.exceptions.ScreenNotFoundException
 import nl.q42.sdui.ScreenRegistry
 import org.slf4j.LoggerFactory
@@ -22,7 +22,7 @@ class ScreenRoute(private val registry: ScreenRegistry) {
     @GetMapping(path = [ServerRoute.SCREEN], produces = [MediaType.APPLICATION_JSON_VALUE])
     @Throws(ScreenNotFoundException::class)
     fun handler(
-        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext,
+        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: AppRequestContext,
         @RequestParam(QueryParameter.SCREEN_IDENTIFIER) screenIdentifier: String
     ): ScreenResponse? {
         if (screenIdentifier.isEmpty()) {

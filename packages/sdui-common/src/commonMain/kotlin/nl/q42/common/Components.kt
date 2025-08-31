@@ -4,8 +4,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
+import kotlin.reflect.cast
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * /
  * Primary definitions used by all components         *
@@ -22,6 +21,14 @@ sealed class Component(
     override val objectType: String
 ) : TypedObject() {
     abstract val contentId: String
+
+    fun isAvailable(version: Int): Boolean {
+        /*val annotation = this::class.annotations.find { it is VersionDependable } as? VersionDependable
+            ?: return true
+
+        return untilVersion == null || version > untilVersion*/
+        return true
+    }
 }
 
 
@@ -44,16 +51,16 @@ object ActionType {
     const val NAVIGATION: String = "navigate"
 }
 
-/** * * * * * * * * * * * * * * * * * * * * * * * * * /
- *               Action definitions                   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                Action definitions                   *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 @Serializable
 @SerialName(ActionType.NAVIGATION)
 data class NavigationEvent(val path: String) : Event(ActionType.NAVIGATION)
 
-/** * * * * * * * * * * * * * * * * * * * * * * * * * /
- *              Component definitions                 *
- * * * * * * * * * * * * * * * * * * * * * * * * * * **/
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *               Component definitions                 *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 @VersionDependable(until = 2)
 @Serializable
 @SerialName(ComponentType.SPACER)
@@ -132,7 +139,7 @@ data class SearchBarComponent(
 @SerialName(ComponentType.IMAGE)
 data class ImageComponent(
     val url: String,
-    val alt: String?,
+    val alt: String,
     val interactionEvents: List<Event>? = null,
     override val contentId: String,
 ) : Component(ComponentType.IMAGE)
@@ -143,7 +150,7 @@ data class ScrollableContainer(
     val content: List<Component>,
     val direction: ScrollDirection = ScrollDirection.VERTICAL,
     override val contentId: String
-): Component(ComponentType.SCROLLABLE_CONTAINER)
+) : Component(ComponentType.SCROLLABLE_CONTAINER)
 
 enum class ScrollDirection {
     HORIZONTAL,

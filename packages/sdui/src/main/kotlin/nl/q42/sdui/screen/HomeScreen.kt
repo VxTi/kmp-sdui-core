@@ -2,22 +2,21 @@ package nl.q42.sdui.screen
 
 import nl.q42.common.ButtonComponent
 import nl.q42.common.ButtonVariant
+import nl.q42.common.Component
 import nl.q42.common.ImageComponent
 import nl.q42.common.NavigationEvent
-import nl.q42.common.ScrollDirection
 import nl.q42.common.ScrollableContainer
 import nl.q42.common.SearchBarComponent
 import nl.q42.common.SpacerComponent
 import nl.q42.common.TextComponent
 import nl.q42.common.screen.Screen
-import nl.q42.core.RequestContext
+import nl.q42.core.AppRequestContext
 
 @org.springframework.stereotype.Component
 class HomeScreen : ScreenInstance {
 
-    override fun create(context: RequestContext): Screen {
-        return Screen(
-            name(),
+    override fun content(context: AppRequestContext): List<Component> {
+        return listOf(
             SpacerComponent(1, "0"),
             TextComponent(text = "Hello world!", contentId = "text-1"),
             ScrollableContainer(
@@ -36,7 +35,7 @@ class HomeScreen : ScreenInstance {
                         contentId = "image"
                     ),
                 ), contentId = "test-container"
-            ),
+            )
         )
     }
 

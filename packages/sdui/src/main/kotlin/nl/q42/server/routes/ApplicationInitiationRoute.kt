@@ -2,9 +2,8 @@ package nl.q42.server.routes
 
 import nl.q42.common.RequestHeader
 import nl.q42.common.ScreenResponse
-import nl.q42.core.RequestContext
+import nl.q42.core.AppRequestContext
 import nl.q42.sdui.ScreenRegistry
-import nl.q42.server.middleware.MiddlewareConfiguration
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -19,7 +18,7 @@ class ApplicationInitiationRoute(private val registry: ScreenRegistry) {
         produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun handler(
-        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: RequestContext
+        @RequestAttribute(RequestHeader.ATTRIB_APP_CONTEXT) context: AppRequestContext
     ): ScreenResponse? {
         log.info(
             "Application initiated - Locale: {} - Version: {}", context.locale,

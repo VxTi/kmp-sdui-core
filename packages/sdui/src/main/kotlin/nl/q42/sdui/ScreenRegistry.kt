@@ -2,7 +2,7 @@ package nl.q42.sdui
 
 import nl.q42.common.screen.Screen
 import nl.q42.common.screen.ScreenTab
-import nl.q42.core.RequestContext
+import nl.q42.core.AppRequestContext
 import nl.q42.sdui.screen.*
 import org.springframework.stereotype.Service
 
@@ -12,20 +12,20 @@ class ScreenRegistry(private val screens: MutableList<ScreenInstance>) {
     val all: MutableList<ScreenInstance>
         get() = this.screens
 
-    fun getByIdentifier(screenIdentifier: String, context: RequestContext): Screen? {
+    fun getByIdentifier(screenIdentifier: String, context: AppRequestContext): Screen? {
         return this.screens.stream()
             .filter { screen: ScreenInstance? -> screen?.name().equals(screenIdentifier) }
             .findFirst()
-            .map { screen: ScreenInstance -> screen.create(context) }
+            .map { screen: ScreenInstance -> screen.createScreen(context) }
             .orElse(null)
     }
 
-    fun defaultScreen(context: RequestContext): Screen {
+    fun defaultScreen(context: AppRequestContext): Screen {
         val initial = getByIdentifier(DEFAULT_SCREEN_IDENTIFIER, context)
 
         return when {
             initial != null -> initial
-            screens.isNotEmpty() -> screens[0].create(context)
+            screens.isNotEmpty() -> screens[0].createScreen(context)
             else -> throw IllegalStateException("No screens available in the registry")
         }
 

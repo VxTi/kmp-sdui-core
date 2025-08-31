@@ -15,6 +15,7 @@ internal class ViewController(
     val serverConnector: ServerConnector = ServerConnector(appInstance)
 ) {
 
+    private val mutableExternallyLoading = MutableStateFlow(false);
     private val mutableTabs = MutableStateFlow<List<ScreenTab>>(emptyList())
     private val mutableTabIndex = MutableStateFlow(0);
     private val mutableScreen = MutableStateFlow<Screen?>(null);
@@ -24,7 +25,17 @@ internal class ViewController(
     val tabs: StateFlow<List<ScreenTab>> = mutableTabs.asStateFlow()
     val screen: StateFlow<Screen?> = mutableScreen.asStateFlow();
     val selectedTabIndex: StateFlow<Int> = mutableTabIndex.asStateFlow();
+    val externallyLoading: StateFlow<Boolean> = mutableExternallyLoading.asStateFlow();
 
+
+    fun refreshScreen() {
+        val currentScreenIdentifier = screen.value?.identifier ?: return;
+        runBlocking {
+            temporarilySuspend {
+                fetchScreen(currentScreenIdentifier);
+            }
+        }
+    }
 
     private fun cacheScreen(response: ScreenResponse?) {
         if (response?.screen == null) return;
@@ -42,18 +53,27 @@ internal class ViewController(
     }
 
     suspend fun fetchInitialScreen() {
-        val response = serverConnector.fetch<ScreenResponse>(appInstance, "/")
-        mutableTabs.value = response?.tabs ?: emptyList();
-        mutableScreen.value = response?.screen
+        temporarilySuspend {
+            val response = serverConnector.fetch<ScreenResponse>(appInstance, "/")
+            mutableTabs.value = response?.tabs ?: emptyList();
+            mutableScreen.value = response?.screen
 
-        cacheScreen(response);
+            cacheScreen(response);
+        }
     }
 
     suspend fun fetchScreen(screenIdentifier: String) {
-        val response = serverConnector.fetchScreen(screenIdentifier);
-        mutableScreen.value = response?.screen;
+        temporarilySuspend {
+            val response = serverConnector.fetchScreen(screenIdentifier);
+            mutableScreen.value = response?.screen;
+            cacheScreen(response);
+        }
+    }
 
-        cacheScreen(response);
+    private suspend fun temporarilySuspend(action: suspend () -> Unit) {
+        mutableExternallyLoading.value = true;
+        action()
+        mutableExternallyLoading.value = false;
     }
 
     /**

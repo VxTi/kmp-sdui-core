@@ -6,7 +6,7 @@ import jakarta.servlet.http.HttpServletResponse
 import nl.q42.common.RequestHeader
 import nl.q42.common.core.AppIdentity
 import nl.q42.common.core.Locale
-import nl.q42.core.RequestContext
+import nl.q42.core.AppRequestContext
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.HandlerInterceptor
@@ -35,7 +35,7 @@ class AppContextMiddleware : HandlerInterceptor {
             return false;
         }
 
-        val context = RequestContext(locale, version)
+        val context = AppRequestContext(locale, version)
 
         request.setAttribute(RequestHeader.ATTRIB_APP_CONTEXT, context)
 

@@ -2,7 +2,7 @@ package nl.q42.core
 
 import nl.q42.common.core.Locale
 
-class RequestContext(
+class AppRequestContext(
     var locale: Locale?,
     var appVersion: Int,
 )
