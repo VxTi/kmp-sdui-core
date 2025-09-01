@@ -24,16 +24,14 @@ internal fun ServerDrivenScreen(screen: Screen?, controller: ViewController) {
         isRefreshing = isRefreshing,
         onRefresh = { controller.refreshScreen() }
     ) {
-        LazyColumn {
-            item {
-                DynamicContentList(screen.content, controller)
-            }
+        Column {
+            DynamicContentList(screen.content, controller)
         }
     }
 }
 
 @Composable
-internal fun DynamicContentList(components: List<Component>, controller: ViewController) {
+internal fun DynamicContentList(components: List<ServerComponent>, controller: ViewController) {
     Column {
         reduceDuplicateComponents(components)
             .forEach { element -> DrawableComponentSequence(element, controller) }
@@ -41,7 +39,7 @@ internal fun DynamicContentList(components: List<Component>, controller: ViewCon
 }
 
 // Removes components with duplicate contentId, keeping only the first occurrence
-fun reduceDuplicateComponents(components: List<Component>): List<Component> {
+fun reduceDuplicateComponents(components: List<ServerComponent>): List<ServerComponent> {
     return components.groupBy { it.contentId }
         .filter { it.value.size == 1 }
         .flatMap { it.value }
@@ -49,7 +47,7 @@ fun reduceDuplicateComponents(components: List<Component>): List<Component> {
 
 
 @Composable
-internal fun DrawableComponentSequence(component: Component, controller: ViewController) {
+internal fun DrawableComponentSequence(component: ServerComponent, controller: ViewController) {
     when (component) {
         is TextComponent -> TextComponentDrawable(component, controller)
         is SpacerComponent -> SpacerDrawable(component, controller)
@@ -57,5 +55,6 @@ internal fun DrawableComponentSequence(component: Component, controller: ViewCon
         is ButtonComponent -> ButtonDrawable(component, controller)
         is ImageComponent -> ImageComponentDrawable(component, controller)
         is ScrollableContainer -> ScrollContainerDrawable(component, controller)
+        is ListItemContainer -> ListItemContainerDrawable(component, controller)
     }
 }

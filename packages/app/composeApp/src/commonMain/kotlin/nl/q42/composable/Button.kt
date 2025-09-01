@@ -30,7 +30,7 @@ internal fun ButtonDrawable(component: ButtonComponent, controller: ViewControll
             contentColor = Color.White
         ),
         interactionSource = interactionSource,
-        modifier = Modifier.padding(8.dp) // Example padding
+        modifier = Modifier.padding(8.dp)
     ) {
         Text(text = component.text)
     }

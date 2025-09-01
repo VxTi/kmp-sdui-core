@@ -6,9 +6,6 @@ plugins {
     id("com.android.application") apply false
     kotlin("multiplatform") apply false
 
-    kotlin("plugin.lombok") version "2.2.10"
-    id("io.freefair.lombok") version "8.14.2"
-
     kotlin("jvm")
     kotlin("plugin.serialization")
 }

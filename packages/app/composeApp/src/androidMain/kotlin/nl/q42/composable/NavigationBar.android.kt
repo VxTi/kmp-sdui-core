@@ -6,7 +6,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import nl.q42.ViewController
 
 @Composable
@@ -14,8 +13,6 @@ internal actual fun NavigationBar(controller: ViewController) {
 
     val tabs by controller.tabs.collectAsState();
     val selectedTabIndex by controller.selectedTabIndex.collectAsState();
-
-    val coroutineScope = rememberCoroutineScope()
 
     NavigationBar {
         tabs.forEachIndexed { index, tab ->

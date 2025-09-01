@@ -1,7 +1,3 @@
-import org.gradle.kotlin.dsl.implementation
-import org.jetbrains.compose.ExperimentalComposeLibrary
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-
 plugins {
     alias(libs.plugins.multiplatform)
     alias(libs.plugins.compose.compiler)
@@ -36,6 +32,11 @@ kotlin {
             applicationId = "nl.q42.androidApp"
             versionCode = 1
             versionName = "1.0.0"
+        }
+
+        compileOptions {
+            sourceCompatibility = JavaVersion.VERSION_18
+            targetCompatibility = JavaVersion.VERSION_18
         }
     }
 
@@ -72,11 +73,10 @@ kotlin {
             implementation(libs.ktor.client.android)
         }
 
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
-
         iosMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
             kotlin.srcDirs("src/iosMain/kotlin")
         }
     }

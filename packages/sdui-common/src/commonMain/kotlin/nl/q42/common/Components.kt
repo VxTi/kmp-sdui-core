@@ -1,10 +1,10 @@
 package nl.q42.common
 
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
-import kotlin.reflect.cast
 
 /** * * * * * * * * * * * * * * * * * * * * * * * * * /
  * Primary definitions used by all components         *
@@ -17,42 +17,27 @@ sealed class TypedObject {
 }
 
 @Serializable
-sealed class Component(
+sealed class ServerComponent(
     override val objectType: String
 ) : TypedObject() {
     abstract val contentId: String
-
-    fun isAvailable(version: Int): Boolean {
-        /*val annotation = this::class.annotations.find { it is VersionDependable } as? VersionDependable
-            ?: return true
-
-        return untilVersion == null || version > untilVersion*/
-        return true
-    }
 }
-
 
 @Serializable
 sealed class Event(
     override val objectType: String
 ) : TypedObject()
 
-object ComponentType {
-    const val TEXT: String = "TEXT_COMPONENT"
-    const val IMAGE: String = "IMAGE_COMPONENT"
-    const val SPACER: String = "SPACER_COMPONENT"
-    const val SEARCH_BAR: String = "SEARCH_BAR_COMPONENT"
-    const val BUTTON: String = "BUTTON_COMPONENT"
-
-    const val SCROLLABLE_CONTAINER: String = "SCROLLABLE_CONTAINER"
-}
-
-object ActionType {
-    const val NAVIGATION: String = "navigate"
+@Serializable
+sealed class ListItem(
+    override val objectType: String,
+) : TypedObject() {
+    abstract val itemId: String
+    abstract val events: List<Event>
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                Action definitions                   *
+ *                 Event definitions                   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 @Serializable
 @SerialName(ActionType.NAVIGATION)
@@ -61,13 +46,12 @@ data class NavigationEvent(val path: String) : Event(ActionType.NAVIGATION)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *               Component definitions                 *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-@VersionDependable(until = 2)
 @Serializable
 @SerialName(ComponentType.SPACER)
 data class SpacerComponent(
     val size: Int,
     override val contentId: String
-) : Component(ComponentType.SPACER)
+) : ServerComponent(ComponentType.SPACER)
 
 @Serializable
 @SerialName(ComponentType.BUTTON)
@@ -76,7 +60,7 @@ data class ButtonComponent(
     val variant: ButtonVariant,
     val interactionEvents: List<Event>,
     override val contentId: String
-) : Component(ComponentType.BUTTON)
+) : ServerComponent(ComponentType.BUTTON)
 
 enum class ButtonVariant {
     NORMAL,
@@ -92,7 +76,7 @@ data class TextComponent(
     var size: TextSize,
     val formatting: TextFormatting,
     override val contentId: String
-) : Component(ComponentType.TEXT) {
+) : ServerComponent(ComponentType.TEXT) {
     constructor(
         text: String,
         contentId: String,
@@ -133,27 +117,55 @@ enum class TextSize {
 data class SearchBarComponent(
     val placeholder: String?,
     override val contentId: String
-) : Component(ComponentType.SEARCH_BAR)
+) : ServerComponent(ComponentType.SEARCH_BAR)
 
 @Serializable
 @SerialName(ComponentType.IMAGE)
+@RequiresAppVersion(min = 3)
 data class ImageComponent(
     val url: String,
     val alt: String,
     val interactionEvents: List<Event>? = null,
     override val contentId: String,
-) : Component(ComponentType.IMAGE)
+) : ServerComponent(ComponentType.IMAGE)
 
 @Serializable
 @SerialName(ComponentType.SCROLLABLE_CONTAINER)
 data class ScrollableContainer(
-    val content: List<Component>,
+    val content: List<ServerComponent>,
     val direction: ScrollDirection = ScrollDirection.VERTICAL,
     override val contentId: String
-) : Component(ComponentType.SCROLLABLE_CONTAINER)
+) : ServerComponent(ComponentType.SCROLLABLE_CONTAINER)
 
 enum class ScrollDirection {
     HORIZONTAL,
     VERTICAL,
     BOTH
+}
+
+@Serializable
+@SerialName(ComponentType.LIST_ITEM_CONTAINER)
+data class ListItemContainer(
+    val items: List<ListItem>,
+    val title: String?,
+    override val contentId: String
+) : ServerComponent(ComponentType.LIST_ITEM_CONTAINER)
+
+@Serializable
+@SerialName(ListItemType.TRANSACTION_ITEM)
+data class TransactionListItem(
+    val merchantName: String,
+    val transactionDate: String,
+    val amount: String,
+    val currency: CurrencyType,
+    val merchantThumbnailUrl: String? = null,
+    override val events: List<Event> = emptyList(),
+    override val itemId: String
+): ListItem(ListItemType.TRANSACTION_ITEM)
+
+enum class CurrencyType {
+    EUR,
+    USD,
+    CAD,
+    GBP
 }

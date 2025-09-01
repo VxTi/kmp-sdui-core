@@ -33,7 +33,7 @@ internal fun App(viewController: ViewController) = AppTheme {
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             Column(
-                modifier = Modifier.fillMaxSize().padding(32.dp),
+                modifier = Modifier.fillMaxSize().padding(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (isLoading) {
