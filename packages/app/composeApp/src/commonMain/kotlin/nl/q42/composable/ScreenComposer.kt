@@ -1,7 +1,6 @@
 package nl.q42.composable
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -18,7 +17,7 @@ internal fun ServerDrivenScreen(screen: Screen?, controller: ViewController) {
         return
     }
 
-    val isRefreshing by controller.externallyLoading.collectAsStateWithLifecycle()
+    val isRefreshing by controller.screenStateBusy.collectAsStateWithLifecycle()
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,

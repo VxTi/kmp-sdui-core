@@ -14,6 +14,7 @@ import nl.q42.common.ScreenResponse
 import nl.q42.common.screen.Screen
 import nl.q42.common.screen.ScreenTab
 import nl.q42.core.AppInstance
+import nl.q42.core.CacheSet
 import nl.q42.core.ServerConnector
 
 internal class ViewController(
@@ -21,37 +22,38 @@ internal class ViewController(
     val serverConnector: ServerConnector = ServerConnector(appInstance)
 ) {
 
-    private val mutableExternallyLoading = MutableStateFlow(false);
-    private val mutableTabs = MutableStateFlow<List<ScreenTab>>(emptyList())
-    private val mutableTabIndex = MutableStateFlow(0);
-    private val mutableScreen = MutableStateFlow<Screen?>(null);
+    val navigationStack = NavigationStack();
 
-    private val cachedScreens = mapOf<String, Screen?>().toMutableMap()
+    private val screenCache = CacheSet<Screen>();
 
-    val tabs: StateFlow<List<ScreenTab>> = mutableTabs.asStateFlow()
-    val screen: StateFlow<Screen?> = mutableScreen.asStateFlow();
-    val selectedTabIndex: StateFlow<Int> = mutableTabIndex.asStateFlow();
-    val externallyLoading: StateFlow<Boolean> = mutableExternallyLoading.asStateFlow();
+    // Internal mutable StateFlows
+    private val _loadingState = MutableStateFlow(false);
+    private val _tabs = MutableStateFlow<List<ScreenTab>>(emptyList())
+    private val _currentTabIndex = MutableStateFlow(0);
+    private val _currentScreen = MutableStateFlow<Screen?>(null);
+
+    // Exposed as read-only StateFlows
+    val tabs: StateFlow<List<ScreenTab>> = _tabs.asStateFlow()
+    val screen: StateFlow<Screen?> = _currentScreen.asStateFlow();
+    val selectedTabIndex: StateFlow<Int> = _currentTabIndex.asStateFlow();
+    val screenStateBusy: StateFlow<Boolean> = _loadingState.asStateFlow();
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
 
-    fun emitEvents(events: List<Event>) {
-        events.forEach { emitEvent(it) }
-    }
+    fun emitEvents(events: List<Event>) = events.forEach { emitEvent(it) }
 
     fun emitEvent(event: Event) {
         scope.launch {
             when (event) {
                 is NavigationEvent -> {
-                    val screen = tryGetCachedScreen(event.screenId)
                     println("Navigation action invoked to path: ${event.screenId}");
 
-                    if (screen == null) {
-                        fetchScreen(event.screenId, setCurrent = true)
-                    } else {
-                        setCurrentScreen(screen);
-                    }
+                    screenCache.get(event.screenId)
+                        ?.let { cachedScreen -> setCurrentScreen(cachedScreen) } ?: fetchScreen(
+                        event.screenId,
+                        NavigationIntent.PUSH_AND_CACHE
+                    )
                 }
             }
         }
@@ -77,48 +79,23 @@ internal class ViewController(
 
     fun tryPrefetchScreen(screenId: String) {
         println("Prefetching screen");
-        val cachedScreen = tryGetCachedScreen(screenId);
 
-        // Screen is already cached, and cache is still usable.
-        if (cachedScreen != null) return;
-
-        fetchScreen(screenId, cache = true);
+        screenCache.get(screenId) ?: return;
+        fetchScreen(screenId, NavigationIntent.CACHE_SCREEN);
     }
 
     fun refreshScreen() {
         val currentScreenId = screen.value?.id ?: return;
-        scope.launch {
-            runLoadableAction {
-                fetchScreen(currentScreenId, setCurrent = true, cache = true);
-            }
-        }
-    }
 
-    private fun tryGetCachedScreen(screenId: String): Screen? {
-        if (!cachedScreens.containsKey(screenId)) return null;
-
-        return cachedScreens[screenId];
-    }
-
-    private fun cacheScreen(screen: Screen) {
-        val key = screen.id;
-
-        val previousCachedScreen = cachedScreens[key];
-
-        if (previousCachedScreen != null && previousCachedScreen.hash == screen.hash) {
-            // No need to update cache if screen hasn't changed
-            return;
-        }
-
-        cachedScreens[key] = screen;
+        fetchScreen(currentScreenId, NavigationIntent.PUSH_AND_CACHE);
     }
 
     fun fetchInitialScreen() {
         scope.launch {
             runLoadableAction {
                 val response = serverConnector.fetch<ScreenResponse>(appInstance, "/")
-                mutableTabs.value = response?.tabs ?: emptyList();
-                mutableScreen.value = response?.screen
+                _tabs.value = response?.tabs ?: emptyList();
+                _currentScreen.value = response?.screen
             }
         }
     }
@@ -126,23 +103,41 @@ internal class ViewController(
     /**
      * Retrieves a screen from the server, and optionally caches it.
      */
-    fun fetchScreen(screenIdentifier: String, setCurrent: Boolean = false, cache: Boolean = false) {
+    fun fetchScreen(screenIdentifier: String, navigationIntent: NavigationIntent) {
         scope.launch {
-            runLoadableAction {
-                val response = serverConnector.fetchScreen(screenIdentifier);
-                response?.screen?.let { fetchedScreen ->
-                    mutableScreen.value = fetchedScreen
+            serverConnector.fetchScreen(screenIdentifier) { screenResponse ->
+                val screen: Screen = screenResponse?.screen ?: return@fetchScreen;
 
-                    if (cache) cacheScreen(fetchedScreen)
+                val isCurrent = screen.id == _currentScreen.value?.id
 
-                    if (setCurrent) setCurrentScreen(fetchedScreen)
+                val canCache =
+                    (navigationIntent.mask and NavigationIntent.CACHE_SCREEN.mask) != 0 && !isCurrent
+
+                _currentScreen.value = screen
+
+                if (canCache) screenCache.put(
+                    key = screen.id,
+                    data = screen,
+                    expiresIn = screen.cacheDurationMs
+                );
+
+                val shouldPushToStack =
+                    (navigationIntent.mask and NavigationIntent.PUSH_TO_STACK.mask) != 0 && !isCurrent
+
+                val shouldReplaceInStack =
+                    (navigationIntent.mask and NavigationIntent.REPLACE_IN_STACK.mask) != 0 && !isCurrent
+
+                if (shouldPushToStack) {
+                    navigationStack.push(screen)
+                } else if (shouldReplaceInStack) {
+                    navigationStack.pruneAndPush(screen)
                 }
             }
         }
     }
 
     fun setCurrentScreen(screen: Screen) {
-        mutableScreen.value = screen;
+        _currentScreen.value = screen;
 
         val tabIndex = tabs.value.indexOfFirst { tab -> tab.screenId == screen.id };
 
@@ -150,27 +145,47 @@ internal class ViewController(
     }
 
     private suspend fun runLoadableAction(action: suspend () -> Unit) {
-        mutableExternallyLoading.value = true;
+        _loadingState.value = true;
         try {
             action()
         } catch (e: Exception) {
             println("An error occurred whilst attempting to execute action: ${e.message}")
         } finally {
-            mutableExternallyLoading.value = false;
+            _loadingState.value = false;
         }
+    }
+
+    fun pushToNavigationStack(screen: Screen) {
+        _currentScreen.value = screen;
     }
 
     /**
      * Sets the selected tab index and updates the screen if it's cached.
      */
     fun setSelectedTabIndex(index: Int) {
-        mutableTabIndex.value = index;
+        _currentTabIndex.value = index;
 
-        if (cachedScreens.containsKey(tabs.value[index].screenId)) {
-            mutableScreen.value = cachedScreens[tabs.value[index].screenId]
+        screenCache.get(tabs.value[index].screenId)?.let { screen ->
+            _currentScreen.value = screen
+            navigationStack.push(screen)
             return;
         }
 
-        fetchScreen(tabs.value[index].screenId, setCurrent = true, cache = true)
+        scope.launch {
+            fetchScreen(tabs.value[index].screenId, NavigationIntent.REPLACE_AND_CACHE)
+        }
+    }
+
+    fun getScreenById(screenId: String): Screen? {
+        return screenCache.get(screenId)
     }
 }
+
+enum class NavigationIntent(val mask: Int) {
+    PUSH_TO_STACK(1),
+    REPLACE_IN_STACK(2),
+    CACHE_SCREEN(4),
+    PUSH_AND_CACHE(1 or 4),
+    REPLACE_AND_CACHE(2 or 4)
+}
+

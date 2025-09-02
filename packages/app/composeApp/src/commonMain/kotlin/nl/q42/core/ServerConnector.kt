@@ -46,16 +46,15 @@ class ServerConnector(private val appInstance: AppInstance) {
         }
     }
 
-    suspend fun fetchScreen(screenId: String): ScreenResponse? {
-        return try {
+    suspend fun fetchScreen(screenId: String, callback: (ScreenResponse?) -> Unit) {
+        try {
             fetch<ScreenResponse>(
                 this.appInstance,
                 ServerRoute.SCREEN,
                 listOf(Pair(QueryParameter.SCREEN_IDENTIFIER, screenId))
-            )
+            ).let { response -> callback(response) }
         } catch (exception: Exception) {
             println("An error occurred whilst attempting to deserialize response: ${exception.message}")
-            return null
         }
     }
 }

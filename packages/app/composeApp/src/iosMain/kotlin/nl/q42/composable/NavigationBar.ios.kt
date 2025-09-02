@@ -1,15 +1,19 @@
 package nl.q42.composable
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitViewController
+import androidx.compose.ui.window.ComposeUIViewController
 import kotlinx.cinterop.ExperimentalForeignApi
 import nl.q42.ViewController
-import platform.UIKit.*
+import platform.UIKit.UITabBarController
+import platform.UIKit.UITabBarControllerDelegateProtocol
+import platform.UIKit.UITabBarItem
+import platform.UIKit.UIViewController
+import platform.UIKit.tabBarItem
 import platform.darwin.NSObject
 
 @OptIn(ExperimentalForeignApi::class)
@@ -19,70 +23,59 @@ internal actual fun NavigationBar(controller: ViewController) {
     val selectedTabIndex by controller.selectedTabIndex.collectAsState()
 
     val tabBarController = remember {
-        UITabBarController().apply {
-            // Configure tab bar appearance
-            tabBar.backgroundColor = UIColor.systemBackgroundColor
-            tabBar.tintColor = UIColor.systemBlueColor
-        }
-    }
-
-    // Create a delegate class
-    val delegate = remember {
-        object : NSObject(), UITabBarControllerDelegateProtocol {
+        // Create the TabBarController and its delegate only once
+        val delegate = object : NSObject(), UITabBarControllerDelegateProtocol {
             override fun tabBarController(
                 tabBarController: UITabBarController,
                 didSelectViewController: UIViewController
             ) {
-                val newIndex = tabBarController.selectedIndex.toInt()
-                if (newIndex != selectedTabIndex) {
-                    controller.setSelectedTabIndex(newIndex)
-                }
-            }
-        }
-    }
-
-    // Update view controllers when tabs change
-    LaunchedEffect(tabs) {
-        val viewControllers = tabs.mapIndexed { index, tab ->
-            UIViewController().apply {
-                title = tab.title
-
-                // Create tab bar item
-                val tabBarItem = UITabBarItem(
-                    title = tab.title,
-                    image = null, // You can add icons here if needed
-                    tag = index.toLong()
-                )
-
-                this.tabBarItem = tabBarItem
-
-                // Set a background color or view to make it visible
-                view.backgroundColor = UIColor.systemBackgroundColor
+                // When a tab is selected in UIKit, update the state in Compose
+                controller.setSelectedTabIndex(tabBarController.selectedIndex.toInt())
             }
         }
 
-        tabBarController.setViewControllers(viewControllers, animated = false)
-    }
-
-    // Set the delegate
-    LaunchedEffect(delegate) {
-        tabBarController.delegate = delegate
-    }
-
-    // Update selected index when it changes
-    LaunchedEffect(selectedTabIndex) {
-        if (selectedTabIndex < tabs.size && selectedTabIndex >= 0) {
-            tabBarController.selectedIndex = selectedTabIndex.toULong()
+        UITabBarController().apply {
+            this.delegate = delegate
         }
     }
 
     UIKitViewController(
         factory = { tabBarController },
         modifier = Modifier,
-        update = { updatedController ->
-            // Update selected index if it has changed
-            if (updatedController.selectedIndex.toInt() != selectedTabIndex) {
-                updatedController.selectedIndex = selectedTabIndex.toULong()
+        update = {
+            // The update block is called on every recomposition.
+            // This is the ideal place to sync the UIKit view with the Compose state.
+
+            // 1. Sync the selected tab index
+            // Check if the selected index in UIKit is different from our state
+            if (tabBarController.selectedIndex.toInt() != selectedTabIndex) {
+                tabBarController.setSelectedIndex(selectedTabIndex.toULong())
+            }
+
+            // 2. Sync the view controllers (tabs)
+            // Check if the number of tabs or their titles have changed
+            val currentViewControllers =
+                tabBarController.viewControllers?.mapNotNull { it as? UIViewController }
+                    ?: emptyList()
+            if (currentViewControllers.size != tabs.size || currentViewControllers.map { it.title } != tabs.map { it.title }) {
+
+                // If they have changed, create new view controllers
+                val newViewControllers = tabs.mapIndexed { index, tab ->
+                    // Use ComposeUIViewController to host Composable content
+                    ComposeUIViewController {
+                        controller.getScreenById(tab.screenId)?.let { screen ->
+                            DynamicContentList(screen.content, controller)
+                        }
+                    }.apply {
+                        this.title = tab.title
+                        this.tabBarItem = UITabBarItem(
+                            title = tab.title,
+                            image = null, // TODO: Add UIImage for icon
+                            tag = index.toLong()
+                        )
+                    }
+                }
+                tabBarController.setViewControllers(newViewControllers, animated = false)
             }
         }
     )

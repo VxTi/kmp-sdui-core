@@ -23,8 +23,11 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 internal fun App(viewController: ViewController) = AppTheme {
 
-    val isLoading by viewController.externallyLoading.collectAsStateWithLifecycle()
-    val screen by viewController.screen.collectAsStateWithLifecycle()
+    val isLoading by viewController.screenStateBusy.collectAsStateWithLifecycle()
+
+    val currentScreen by remember(viewController.navigationStack) {
+        derivedStateOf { viewController.navigationStack.currentScreen() }
+    }
 
     LaunchedEffect(Unit) { viewController.fetchInitialScreen(); }
 
@@ -38,14 +41,13 @@ internal fun App(viewController: ViewController) = AppTheme {
             ) {
                 if (isLoading) {
                     CircularProgressIndicator()
-                } else if (screen != null) {
+                } else currentScreen?.let { screen ->
                     ServerDrivenScreen(screen, viewController)
-                } else {
-                    Text(
-                        "No screen data available.",
-                        modifier = Modifier.padding(vertical = 16.dp)
-                    )
-                }
+                } ?: Text(
+                    "No screen data available.",
+                    modifier = Modifier.padding(vertical = 16.dp)
+                )
+
             }
         }
     }
