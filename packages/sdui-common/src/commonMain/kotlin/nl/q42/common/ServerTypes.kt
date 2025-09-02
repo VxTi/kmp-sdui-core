@@ -10,7 +10,7 @@ object ComponentType {
     const val LIST_ITEM_CONTAINER: String = "LIST_ITEM_CONTAINER_COMPONENT"
 }
 
-object ActionType {
+object EventType {
     const val NAVIGATION: String = "navigate"
 }
 

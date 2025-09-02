@@ -21,7 +21,7 @@ class HomeScreen : ScreenInstance {
     override fun content(context: AppRequestContext): List<ServerComponent> {
         return listOf(
             SearchBarComponent(placeholder = "Search...", contentId = "search-2"),
-            SpacerComponent(size = 10, contentId = "spacer-2"),
+            SpacerComponent(size = 3, contentId = "spacer-2"),
             ListItemContainer(
                 listOf(
                     TransactionListItem(
@@ -31,7 +31,7 @@ class HomeScreen : ScreenInstance {
                         CurrencyType.USD,
                         "https://mediamarkt.nl/public/manifest/favicon-Media-48x48.png",
                         listOf(
-                            NavigationEvent("/screen?id=home")
+                            NavigationEvent("search")
                         ),
                         itemId = "item-1"
                     ),
@@ -58,8 +58,8 @@ class HomeScreen : ScreenInstance {
             ButtonComponent(
                 "Hello world from SDUI",
                 ButtonVariant.NORMAL,
-                listOf(NavigationEvent("/screen?id=home")),
-                "test"
+                listOf(NavigationEvent("profile")),
+                "test-button"
             ),
         )
     }

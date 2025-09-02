@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,6 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import nl.q42.ViewController
 import nl.q42.common.ButtonComponent
+import nl.q42.common.ButtonVariant
+import nl.q42.common.core.Locale
+import nl.q42.core.AppInstance
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 internal fun ButtonDrawable(component: ButtonComponent, controller: ViewController) {
@@ -23,15 +28,25 @@ internal fun ButtonDrawable(component: ButtonComponent, controller: ViewControll
     val backgroundColor = if (isPressed) Color.DarkGray else Color.Black
 
     Button(
-        onClick = { controller.appInstance.emitEvents(component.interactionEvents); },
+        onClick = { controller.emitEvents(component.interactionEvents); },
         shape = CircleShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = backgroundColor,
-            contentColor = Color.White
+            contentColor = MaterialTheme.colorScheme.primary,
         ),
         interactionSource = interactionSource,
         modifier = Modifier.padding(8.dp)
     ) {
-        Text(text = component.text)
+        Text(text = component.text,
+            color = MaterialTheme.colorScheme.inversePrimary)
     }
+}
+
+@Preview
+@Composable
+fun ButtonPreview() {
+    ButtonDrawable(
+        ButtonComponent("Hello world", ButtonVariant.NORMAL, emptyList(), "test-button"),
+        ViewController(AppInstance(1, Locale.NL_NL))
+    )
 }

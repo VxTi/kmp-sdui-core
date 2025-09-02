@@ -1,7 +1,6 @@
 package nl.q42.common
 
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -11,37 +10,29 @@ import kotlinx.serialization.json.JsonClassDiscriminator
  * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 @Serializable
 @OptIn(ExperimentalSerializationApi::class)
-@JsonClassDiscriminator("objectType")
+@JsonClassDiscriminator("_type")
 sealed class TypedObject {
-    abstract val objectType: String;
+    abstract val _type: String;
+}
+
+interface Interactable {
+    val interactionEvents: List<Event>;
 }
 
 @Serializable
 sealed class ServerComponent(
-    override val objectType: String
+    override val _type: String
 ) : TypedObject() {
     abstract val contentId: String
 }
 
 @Serializable
-sealed class Event(
-    override val objectType: String
-) : TypedObject()
-
-@Serializable
 sealed class ListItem(
-    override val objectType: String,
-) : TypedObject() {
+    override val _type: String,
+) : TypedObject(), Interactable {
     abstract val itemId: String
-    abstract val events: List<Event>
+    abstract override val interactionEvents: List<Event>
 }
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *                 Event definitions                   *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-@Serializable
-@SerialName(ActionType.NAVIGATION)
-data class NavigationEvent(val path: String) : Event(ActionType.NAVIGATION)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *               Component definitions                 *
@@ -58,9 +49,10 @@ data class SpacerComponent(
 data class ButtonComponent(
     val text: String,
     val variant: ButtonVariant,
-    val interactionEvents: List<Event>,
+    override val interactionEvents: List<Event>,
     override val contentId: String
-) : ServerComponent(ComponentType.BUTTON)
+) : ServerComponent(ComponentType.BUTTON),
+    Interactable
 
 enum class ButtonVariant {
     NORMAL,
@@ -125,9 +117,11 @@ data class SearchBarComponent(
 data class ImageComponent(
     val url: String,
     val alt: String,
-    val interactionEvents: List<Event>? = null,
+
+    override val interactionEvents: List<Event>,
     override val contentId: String,
-) : ServerComponent(ComponentType.IMAGE)
+) : ServerComponent(ComponentType.IMAGE),
+    Interactable
 
 @Serializable
 @SerialName(ComponentType.SCROLLABLE_CONTAINER)
@@ -159,9 +153,9 @@ data class TransactionListItem(
     val amount: String,
     val currency: CurrencyType,
     val merchantThumbnailUrl: String? = null,
-    override val events: List<Event> = emptyList(),
+    override val interactionEvents: List<Event> = emptyList(),
     override val itemId: String
-): ListItem(ListItemType.TRANSACTION_ITEM)
+) : ListItem(ListItemType.TRANSACTION_ITEM)
 
 enum class CurrencyType {
     EUR,

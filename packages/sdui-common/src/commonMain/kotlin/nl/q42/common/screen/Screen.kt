@@ -6,12 +6,12 @@ import nl.q42.common.ServerComponent
 
 @Serializable
 class Screen {
-    val identifier: String;
+    val id: String;
     val hash: Int;
     val content: List<@Polymorphic ServerComponent>;
 
     constructor(name: String, content: List<@Polymorphic ServerComponent>) {
-        this.identifier = name
+        this.id = name
         this.content = content
         this.hash = content.hashCode();
     }

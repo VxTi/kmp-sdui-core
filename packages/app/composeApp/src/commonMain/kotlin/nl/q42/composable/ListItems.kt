@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +15,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -30,9 +30,9 @@ import nl.q42.common.TransactionListItem
 import nl.q42.common.core.Locale
 import nl.q42.core.AppInstance
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import nl.q42.common.CurrencyType
 import nl.q42.common.ListItem
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -65,7 +65,7 @@ internal fun ListItemContainerDrawable(
 
         ) {
             component.items.forEachIndexed { index, item ->
-                ListItemDrawable(item)
+                ListItemDrawable(item, controller)
                 if (index < component.items.filterIsInstance<TransactionListItem>().size - 1) {
                     Box(
                         modifier = Modifier
@@ -76,24 +76,28 @@ internal fun ListItemContainerDrawable(
                 }
             }
         }
+        Spacer(
+            modifier = Modifier.fillMaxWidth()
+                .height(4.dp)
+        )
     }
 }
 
 @Composable
-internal fun ListItemDrawable(item: ListItem) {
+internal fun ListItemDrawable(item: ListItem, controller: ViewController) {
     when (item) {
-        is TransactionListItem -> TransactionListItemDrawable(item)
+        is TransactionListItem -> TransactionListItemDrawable(item, controller)
     }
 }
 
 @Composable
-internal fun TransactionListItemDrawable(item: TransactionListItem) {
+internal fun TransactionListItemDrawable(item: TransactionListItem, controller: ViewController) {
     Button(
         modifier = Modifier.fillMaxWidth()
             .heightIn(min = 64.dp)
             .background(MaterialTheme.colorScheme.surfaceContainer),
         colors = ButtonDefaults.textButtonColors(),
-        onClick = {}
+        onClick = { controller.emitEvents(item.interactionEvents) }
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -150,7 +154,7 @@ fun ListItemContainerPreview() {
                         "Transaction 1",
                         "Description 1",
                         "$10.00",
-                        nl.q42.common.CurrencyType.USD,
+                        CurrencyType.USD,
                         "https://cdn-icons-png.flaticon.com/512/25/25069.png",
                         itemId = "item-1"
                     ),
@@ -158,7 +162,7 @@ fun ListItemContainerPreview() {
                         "Transaction 2",
                         "Description 2",
                         "$20.00",
-                        nl.q42.common.CurrencyType.USD,
+                        CurrencyType.USD,
                         "https://cdn-icons-png.flaticon.com/512/25/25069.png",
                         itemId = "item-2"
                     ),
@@ -166,7 +170,7 @@ fun ListItemContainerPreview() {
                         "Transaction 3",
                         "Description 3",
                         "$30.00",
-                        nl.q42.common.CurrencyType.USD,
+                        CurrencyType.USD,
                         "https://cdn-icons-png.flaticon.com/512/25/25069.png",
                         itemId = "item-3"
                     ),
@@ -190,7 +194,8 @@ fun PreviewTransactionListItem() {
             "$10.00",
             nl.q42.common.CurrencyType.USD,
             "https://cdn-icons-png.flaticon.com/512/25/25069.png",
-            itemId = "item-1"
-        )
+            itemId = "item-1",
+        ),
+        ViewController(AppInstance(1, Locale.NL_NL))
     )
 }
