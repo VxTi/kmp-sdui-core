@@ -95,7 +95,10 @@ internal class ViewController(
             runLoadableAction {
                 val response = serverConnector.fetch<ScreenResponse>(appInstance, "/")
                 _tabs.value = response?.tabs ?: emptyList();
-                _currentScreen.value = response?.screen
+
+                val initialScreen = response?.screen ?: return@runLoadableAction;
+
+                navigationStack.push(initialScreen)
             }
         }
     }
@@ -106,6 +109,7 @@ internal class ViewController(
     fun fetchScreen(screenIdentifier: String, navigationIntent: NavigationIntent) {
         scope.launch {
             serverConnector.fetchScreen(screenIdentifier) { screenResponse ->
+                println("Fetched screen with id: ${screenResponse?.screen?.id}")
                 val screen: Screen = screenResponse?.screen ?: return@fetchScreen;
 
                 val isCurrent = screen.id == _currentScreen.value?.id
@@ -126,6 +130,8 @@ internal class ViewController(
 
                 val shouldReplaceInStack =
                     (navigationIntent.mask and NavigationIntent.REPLACE_IN_STACK.mask) != 0 && !isCurrent
+
+                println("Navigation stack action - push: $shouldPushToStack, replace: $shouldReplaceInStack")
 
                 if (shouldPushToStack) {
                     navigationStack.push(screen)
@@ -177,7 +183,11 @@ internal class ViewController(
     }
 
     fun getScreenById(screenId: String): Screen? {
-        return screenCache.get(screenId)
+        val existing = screenCache.get(screenId);
+        if (existing != null) return existing;
+
+        fetchScreen(screenId, NavigationIntent.PUSH_AND_CACHE);
+        return null;
     }
 }
 
